@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { StyleSheet, ScrollView, Alert } from 'react-native';
+import { StyleSheet, ScrollView, Alert ,useColorScheme} from 'react-native';
 import { Card, SegmentedButtons, Searchbar, Button, useTheme } from 'react-native-paper';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ThemedText } from '@/components/ThemedText';
@@ -15,6 +15,8 @@ interface SaladPreferences {
 }
 
 export default function CreateScreen() {
+  const theme = useTheme();
+  const colorScheme = useColorScheme();
   const [preferences, setPreferences] = useState<SaladPreferences>({
     isVegetarian: false,
     isVegan: false,
@@ -99,8 +101,6 @@ export default function CreateScreen() {
       [key]: !prev[key]
     }));
   };
-
-  const theme = useTheme();
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -195,17 +195,17 @@ const styles = StyleSheet.create({
     marginHorizontal: 16,
     marginBottom: 20,
     borderRadius: 12,
-    elevation: 4,
-    shadowColor: theme => theme.dark ? theme.colors.primary : '#000',
+    elevation: 2,
+    shadowColor: theme => theme.colors.shadow,
     shadowOffset: {
       width: 0,
-      height: 2,
+      height: 1,
     },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
+    shadowOpacity: 0.2,
+    shadowRadius: 2,
     overflow: 'hidden',
     borderWidth: 1,
-    borderColor: theme => theme.dark ? `${theme.colors.primary}20` : theme.colors.outline,
+    borderColor: theme => theme.colors.outline,
   },
   cardTitle: {
     fontSize: 20,

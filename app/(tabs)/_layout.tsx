@@ -1,17 +1,20 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, useColorScheme } from 'react-native';
 
 import { CommonActions } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Text, BottomNavigation } from 'react-native-paper';
+import { Text, BottomNavigation, useTheme } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import Index from'./index';
+  import Index from'./index';
 import SettingsScreen from'./settings'
 import Create from'./Create';
 import CalTracScreen from './caltrac';
 const Tab = createBottomTabNavigator();
 
-export default function MyComponent() {
+export default function TabLayout() {
+  const theme = useTheme();
+  const colorScheme = useColorScheme();
+
   return (
     <Tab.Navigator
       screenOptions={{
@@ -20,7 +23,10 @@ export default function MyComponent() {
       tabBar={({ navigation, state, descriptors, insets }) => (
         <BottomNavigation.Bar
           navigationState={state}
-         safeAreaInsets={insets}
+          safeAreaInsets={insets}
+          style={{
+            backgroundColor: colorScheme === 'dark' ? '#1a1a1a' : '#ffffff'
+          }}
           onTabPress={({ route, preventDefault }) => {
             const event = navigation.emit({
               type: 'tabPress',
@@ -31,7 +37,7 @@ export default function MyComponent() {
             if (event.defaultPrevented) {
               preventDefault();
             } else {
-             navigation.dispatch({
+              navigation.dispatch({
                 ...CommonActions.navigate(route.name, route.params),
                 target: state.key,
               });
@@ -42,23 +48,25 @@ export default function MyComponent() {
             if (options.tabBarIcon) {
               return options.tabBarIcon({ focused, color, size: 24 });
             }
-
             return null;
           }}
           getLabelText={({ route }) => {
             const { options } = descriptors[route.key];
             const label =
               options.tabBarLabel !== undefined
-                ? options.tabBarLabel
+                ? options.tabBarLabel.toString()
                 : options.title !== undefined
                 ? options.title
-                : route.title;
+                : route.name;
 
             return label;
           }}
         />
       )}
     >
+
+
+    
       <Tab.Screen
         name="Home"
         component={Index}

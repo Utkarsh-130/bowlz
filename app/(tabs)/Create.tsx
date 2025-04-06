@@ -4,6 +4,7 @@ import { Card, Switch, TextInput, Button, useTheme } from 'react-native-paper';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
+import { View } from 'react-native';
 
 interface SaladPreferences {
   isVegetarian: boolean;
@@ -114,7 +115,7 @@ export default function CreateScreen() {
             />
             <Card.Content style={styles.cardContent}>
               {Object.entries(preferences).map(([key, value]) => (
-                <ThemedView key={key} style={styles.preferenceRow}>
+                <View key={key} style={styles.preferenceRow}>
                   <ThemedText style={[styles.preferenceText, { color: theme.colors.onSurface }]}>
                     {key.replace('is', '').replace(/([A-Z])/g, ' $1').trim()}
                   </ThemedText>
@@ -123,7 +124,7 @@ export default function CreateScreen() {
                     onValueChange={() => togglePreference(key as keyof SaladPreferences)}
                     color={theme.colors.primary}
                   />
-                </ThemedView>
+                </View>
               ))}
             </Card.Content>
           </Card>
@@ -184,39 +185,59 @@ const styles = StyleSheet.create({
   title: {
     textAlign: 'center',
     marginVertical: 20,
+    fontSize: 24,
+    fontWeight: '700',
   },
   card: {
     marginHorizontal: 16,
     marginBottom: 16,
+    elevation: 2,
+    borderRadius: 12,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.15,
+    shadowRadius: 3.84,
   },
   cardTitle: {
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: '600',
+    paddingHorizontal: 8,
   },
   cardContent: {
     paddingHorizontal: 16,
+    paddingVertical: 8,
   },
   preferenceRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingVertical: 8,
+    paddingVertical: 12,
+    width: '100%',
   },
   preferenceText: {
     fontSize: 16,
+    flex: 1,
   },
   calorieInput: {
     marginVertical: 8,
+    backgroundColor: 'transparent',
   },
   generateButton: {
     margin: 16,
     paddingVertical: 8,
+    borderRadius: 8,
+    borderWidth: 2,
   },
   generateButtonLabel: {
     fontSize: 16,
+    fontWeight: '600',
   },
   recipeText: {
     lineHeight: 24,
+    fontSize: 15,
   },
   fab: {
     position: 'absolute',

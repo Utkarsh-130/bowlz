@@ -1,6 +1,5 @@
 import { Tabs } from 'expo-router';
 import React from 'react';
-import { Platform } from 'react-native';
 import { BottomNavigation, useTheme } from 'react-native-paper';
 import { IconSymbol } from '@/components/ui/IconSymbol';
 import { Colors } from '@/constants/Colors';
@@ -20,10 +19,10 @@ export default function TabLayout() {
           borderTopWidth: 0,
           elevation: 4,
         },
-        tabBar: ({ navigation, state, descriptors }: { navigation: any; state: any; descriptors: any }) => (
+        tabBar: ({ navigation, state, descriptors }) => (
           <BottomNavigation.Bar
             navigationState={state}
-            onTabPress={({ route }: { route: any }) => navigation.navigate(route.name)}
+            onTabPress={({ route }) => navigation.navigate(route.name)}
             renderIcon={({ route, focused, color }) => {
               const { options } = descriptors[route.key];
               return options.tabBarIcon?.({ color, focused });
@@ -40,21 +39,21 @@ export default function TabLayout() {
         name="index"
         options={{
           title: 'Home',
-          tabBarIcon: ({ color }: { color: string }) => <IconSymbol size={28} name="house.fill" color={color} />,
+          tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
         }}
       />
       <Tabs.Screen
         name="caltrac"
         options={{
           title: 'Calories',
-          tabBarIcon: ({ color }: { color: string }) => <IconSymbol size={28} name="camera.fill" color={color} />,
+          tabBarIcon: ({ color }) => <IconSymbol size={28} name="camera.fill" color={color} />,
         }}
       />
       <Tabs.Screen
         name="settings"
         options={{
           title: 'Settings',
-          tabBarIcon: ({ color }: { color: string }) => <IconSymbol size={28} name="gear" color={color} />,
+          tabBarIcon: ({ color }) => <IconSymbol size={28} name="gear" color={color} />,
         }}
       />
     </Tabs>

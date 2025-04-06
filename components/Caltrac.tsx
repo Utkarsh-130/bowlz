@@ -3,7 +3,7 @@ import { View, Image, TouchableOpacity, StyleSheet, ActivityIndicator } from 're
 import * as ImagePicker from 'expo-image-picker';
 import { ThemedText } from './ThemedText';
 import { ThemedView } from './ThemedView';
-
+import { Button } from 'react-native-paper';
 interface CalorieResponse {
   calories: number;
   foodItems: string[];
@@ -105,9 +105,13 @@ export default function Caltrac() {
 
   return (
     <ThemedView style={styles.container}>
-      <TouchableOpacity style={styles.uploadButton} onPress={pickImage}>
+     
+  <Button  mode="outlined" 
+    
+  
+onPress={pickImage}>
         <ThemedText style={styles.buttonText}>Select Food Image</ThemedText>
-      </TouchableOpacity>
+      </Button>
 
       {image && (
         <Image source={{ uri: image }} style={styles.image} />

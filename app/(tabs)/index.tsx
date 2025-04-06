@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, ScrollView } from 'react-native';
-import { TextInput, Button, ProgressBar, Card, Text } from 'react-native-paper';
+import { View, StyleSheet, ScrollView, useColorScheme } from 'react-native';
+import { TextInput, Button, ProgressBar, Card, Text, useTheme } from 'react-native-paper';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 interface MealEntry {
@@ -9,15 +9,17 @@ interface MealEntry {
 }
 
 export default function CalorieTracker() {
+  const theme = useTheme();
+  const colorScheme = useColorScheme();
   const [dailyGoal, setDailyGoal] = useState('2000');
   const [meals, setMeals] = useState<MealEntry[]>([]);
   const [currentMeal, setCurrentMeal] = useState<MealEntry>({ type: 'breakfast', calories: 0 });
 
   const mealColors = {
-    breakfast: '#FF9800',
-    lunch: '#4CAF50',
-    dinner: '#2196F3',
-    snacks: '#9C27B0'
+    breakfast: theme.colors.primary,
+    lunch: theme.colors.secondary,
+    dinner: theme.colors.tertiary,
+    snacks: theme.colors.error
   };
 
   const addMeal = () => {
@@ -37,13 +39,13 @@ export default function CalorieTracker() {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <ScrollView style={styles.scrollView}>
-        <Card style={styles.card}>
-          <Card.Title title="Daily Progress" />
+    <SafeAreaView style={[styles.container, { backgroundColor: theme.colors.background }]}>
+      <ScrollView style={[styles.scrollView, { backgroundColor: theme.colors.background }]}>
+        <Card style={[styles.card, { backgroundColor: theme.colors.elevation.level2 }]}>
+          <Card.Title title="Daily Progress" titleStyle={{ color: theme.colors.onSurface }} />
           <Card.Content>
-            <ProgressBar progress={progress} style={styles.progressBar} />
-            <Text style={styles.progressText}>
+            <ProgressBar progress={progress} style={styles.progressBar} color={theme.colors.primary} />
+            <Text style={[styles.progressText, { color: theme.colors.onSurface }]}>
               {totalCalories} / {dailyGoal} calories
             </Text>
 
@@ -51,8 +53,10 @@ export default function CalorieTracker() {
               {(['breakfast', 'lunch', 'dinner', 'snacks'] as const).map(type => (
                 <View key={type} style={styles.mealSummaryItem}>
                   <View style={[styles.colorIndicator, { backgroundColor: mealColors[type] }]} />
-                  <Text style={{paddingRight:200}}>{type.charAt(0).toUpperCase() + type.slice(1)}</Text>
-                  <Text>{getMealTotal(type)} cal</Text>
+                  <Text style={[{ paddingRight: 200 }, { color: theme.colors.onSurface }]}>
+                    {type.charAt(0).toUpperCase() + type.slice(1)}
+                  </Text>
+                  <Text style={{ color: theme.colors.onSurface }}>{getMealTotal(type)} cal</Text>
                 </View>
               ))}
             </View>
@@ -171,6 +175,7 @@ const styles = StyleSheet.create({
   mealSummaryItem: {
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'space-between',
     marginBottom: 8
   },
   colorIndicator: {

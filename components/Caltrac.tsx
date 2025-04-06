@@ -66,14 +66,31 @@ export default function Caltrac() {
       });
 
       const data = await response.json();
-      if (!data?.choices?.[0]?.message?.content) {
-        throw new Error('Invalid API response structure');
+      if (!data || !data.choices || !Array.isArray(data.choices) || data.choices.length === 0) {
+        throw new Error('Invalid API response: Missing or empty choices array');
       }
+
+      const messageContent = data.choices[0]?.message?.content;
+      if (!messageContent) {
+        throw new Error('Invalid API response: Missing message content');
+      }
+
       try {
-        const parsedResponse = JSON.parse(data.choices[0].message.content);
-        if (!parsedResponse.calories || !parsedResponse.foodItems) {
-          throw new Error('Invalid response format from API');
+        const parsedResponse = JSON.parse(messageContent);
+        
+        // Validate response structure
+        if (typeof parsedResponse !== 'object' || parsedResponse === null) {
+          throw new Error('Invalid response: Not a valid JSON object');
         }
+        
+        if (typeof parsedResponse.calories !== 'number') {
+          throw new Error('Invalid response: calories must be a number');
+        }
+        
+        if (!Array.isArray(parsedResponse.foodItems)) {
+          throw new Error('Invalid response: foodItems must be an array');
+        }
+        
         setResult(parsedResponse);
       } catch (parseError) {
         throw new Error(`Failed to parse API response: ${parseError}`);

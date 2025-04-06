@@ -170,6 +170,10 @@ export default function CreateScreen() {
           disabled={loading}
           style={[styles.generateButton, { borderColor: theme.colors.primary }]}
           labelStyle={[styles.generateButtonLabel, { color: theme.colors.primary }]}
+          contentStyle={{ height: 48 }}
+          rippleColor={theme.colors.primary}
+          uppercase={false}
+          borderRadius={24}
         >
           {loading ? 'Generating...' : 'Generate Recipe'}
         </Button>
@@ -248,7 +252,7 @@ const styles = StyleSheet.create({
   generateButton: {
     margin: 16,
     paddingVertical: 8,
-    borderRadius: 8,
+    borderRadius: 24,
     borderWidth: 2,
   },
   generateButtonLabel: {

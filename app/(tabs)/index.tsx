@@ -1,74 +1,182 @@
-import { Image, StyleSheet, Platform } from 'react-native';
+import React, { useState } from 'react';
+import { View, StyleSheet, ScrollView } from 'react-native';
+import { TextInput, Button, ProgressBar, Card, Text } from 'react-native-paper';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
+interface MealEntry {
+  type: 'breakfast' | 'lunch' | 'dinner' | 'snacks';
+  calories: number;
+}
 
-export default function HomeScreen() {
+export default function CalorieTracker() {
+  const [dailyGoal, setDailyGoal] = useState('2000');
+  const [meals, setMeals] = useState<MealEntry[]>([]);
+  const [currentMeal, setCurrentMeal] = useState<MealEntry>({ type: 'breakfast', calories: 0 });
+
+  const mealColors = {
+    breakfast: '#FF9800',
+    lunch: '#4CAF50',
+    dinner: '#2196F3',
+    snacks: '#9C27B0'
+  };
+
+  const addMeal = () => {
+    if (currentMeal.calories > 0) {
+      setMeals([...meals, currentMeal]);
+      setCurrentMeal({ ...currentMeal, calories: 0 });
+    }
+  };
+
+  const totalCalories = meals.reduce((sum, meal) => sum + meal.calories, 0);
+  const progress = totalCalories / parseInt(dailyGoal);
+
+  const getMealTotal = (type: MealEntry['type']) => {
+    return meals
+      .filter(meal => meal.type === type)
+      .reduce((sum, meal) => sum + meal.calories, 0);
+  };
+
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12'
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          Tap the Explore tab to learn more about what's included in this starter app.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          When you're ready, run{' '}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+    <SafeAreaView style={styles.container}>
+      <ScrollView style={styles.scrollView}>
+        <Card style={styles.card}>
+          <Card.Title title="Daily Progress" />
+          <Card.Content>
+            <ProgressBar progress={progress} style={styles.progressBar} />
+            <Text style={styles.progressText}>
+              {totalCalories} / {dailyGoal} calories
+            </Text>
+
+            <View style={styles.mealSummary}>
+              {(['breakfast', 'lunch', 'dinner', 'snacks'] as const).map(type => (
+                <View key={type} style={styles.mealSummaryItem}>
+                  <View style={[styles.colorIndicator, { backgroundColor: mealColors[type] }]} />
+                  <Text style={{paddingRight:200}}>{type.charAt(0).toUpperCase() + type.slice(1)}</Text>
+                  <Text>{getMealTotal(type)} cal</Text>
+                </View>
+              ))}
+            </View>
+          </Card.Content>
+        </Card>
+        <Card style={styles.card}>
+          <Card.Title title="Daily Calorie Goal" />
+          <Card.Content>
+            <TextInput
+              mode="outlined"
+              label="Daily Goal (calories)"
+              value={dailyGoal}
+              onChangeText={setDailyGoal}
+              keyboardType="numeric"
+              style={styles.input}
+            />
+          </Card.Content>
+        </Card>
+
+        <Card style={styles.card}>
+          <Card.Title title="Add Meal" />
+          <Card.Content>
+            <View style={styles.mealInputContainer}>
+              <Button
+                mode={currentMeal.type === 'breakfast' ? 'contained' : 'outlined'}
+                onPress={() => setCurrentMeal({ ...currentMeal, type: 'breakfast' })}
+                style={styles.mealButton}
+              >
+                Breakfast
+              </Button>
+              <Button
+                mode={currentMeal.type === 'lunch' ? 'contained' : 'outlined'}
+                onPress={() => setCurrentMeal({ ...currentMeal, type: 'lunch' })}
+                style={styles.mealButton}
+              >
+                Lunch
+              </Button>
+              <Button
+                mode={currentMeal.type === 'dinner' ? 'contained' : 'outlined'}
+                onPress={() => setCurrentMeal({ ...currentMeal, type: 'dinner' })}
+                style={styles.mealButton}
+              >
+                Dinner
+              </Button>
+              <Button
+                mode={currentMeal.type === 'snacks' ? 'contained' : 'outlined'}
+                onPress={() => setCurrentMeal({ ...currentMeal, type: 'snacks' })}
+                style={styles.mealButton}
+              >
+                Snacks
+              </Button>
+            </View>
+
+            <TextInput
+              mode="outlined"
+              label="Calories"
+              value={currentMeal.calories.toString()}
+              onChangeText={(text) => setCurrentMeal({ ...currentMeal, calories: parseInt(text) || 0 })}
+              keyboardType="numeric"
+              style={styles.input}
+            />
+
+            <Button mode="contained" onPress={addMeal} style={styles.addButton}>
+              Add Meal
+            </Button>
+          </Card.Content>
+        </Card>
+
+        
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  titleContainer: {
+  container: {
+    flex: 1,
+    backgroundColor: '#f5f5f5'
+  },
+  scrollView: {
+    padding: 16
+  },
+  card: {
+    marginBottom: 16,
+    borderRadius: 22,
+    overflow: 'hidden'
+  },
+  input: {
+    marginBottom: 8
+  },
+  mealInputContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+    marginBottom: 16
+  },
+  mealButton: {
+    width: '48%',
+    marginBottom: 8
+  },
+  addButton: {
+    marginTop: 8
+  },
+  progressBar: {
+    height: 10,
+    borderRadius: 5
+  },
+  progressText: {
+    textAlign: 'center',
+    marginTop: 8,
+    fontSize: 16
+  },
+  mealSummary: {
+    marginTop: 16
+  },
+  mealSummaryItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 8,
+    marginBottom: 8
   },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
-  },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
-  },
+  colorIndicator: {
+    width: 12,
+    height: 12,
+    borderRadius: 6,
+    marginRight: 8
+  }
 });

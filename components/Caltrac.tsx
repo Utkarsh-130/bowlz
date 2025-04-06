@@ -110,7 +110,7 @@ export default function Caltrac() {
     
   
 onPress={pickImage}>
-        <ThemedText style={styles.buttonText}>Select Food Image</ThemedText>
+        <ThemedText >Select Food Image</ThemedText>
       </Button>
 
       {image && (

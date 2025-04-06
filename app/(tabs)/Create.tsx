@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { StyleSheet, ScrollView, Alert } from 'react-native';
-import { Card, Switch, TextInput, Button, useTheme } from 'react-native-paper';
+import { Card, SegmentedButtons, Searchbar, Button, useTheme } from 'react-native-paper';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
@@ -119,11 +119,14 @@ export default function CreateScreen() {
                   <ThemedText style={[styles.preferenceText, { color: theme.colors.onSurface }]}>
                     {key.replace('is', '').replace(/([A-Z])/g, ' $1').trim()}
                   </ThemedText>
-                  <Switch
-                    value={value}
-                    onValueChange={() => togglePreference(key as keyof SaladPreferences)}
-                    color={theme.colors.primary}
-                  />
+                  <Button
+                    mode={value ? 'contained' : 'outlined'}
+                    onPress={() => togglePreference(key as keyof SaladPreferences)}
+                    style={[styles.preferenceButton, value && { backgroundColor: theme.colors.primary }]}
+                    labelStyle={[styles.preferenceButtonLabel, value && { color: theme.colors.onPrimary }]}
+                  >
+                    {value ? 'Yes' : 'No'}
+                  </Button>
                 </View>
               ))}
             </Card.Content>
@@ -135,14 +138,14 @@ export default function CreateScreen() {
               titleStyle={[styles.cardTitle, { color: theme.colors.onSurface }]} 
             />
             <Card.Content>
-              <TextInput
-                mode="outlined"
-                label="Enter calorie target"
+              <Searchbar
+                placeholder="Enter calorie target"
                 value={calorieTarget}
                 onChangeText={setCalorieTarget}
                 keyboardType="numeric"
-                style={styles.calorieInput}
+                style={[styles.calorieInput, { backgroundColor: theme.colors.surfaceVariant }]}
                 theme={theme}
+                icon="calculator"
               />
             </Card.Content>
           </Card>
@@ -185,41 +188,58 @@ const styles = StyleSheet.create({
   title: {
     textAlign: 'center',
     marginVertical: 20,
-    fontSize: 24,
+    fontSize: 28,
     fontWeight: '700',
   },
   card: {
     marginHorizontal: 16,
-    marginBottom: 16,
-    elevation: 2,
+    marginBottom: 20,
     borderRadius: 12,
-    shadowColor: '#000',
+    elevation: 4,
+    shadowColor: theme => theme.dark ? theme.colors.primary : '#000',
     shadowOffset: {
       width: 0,
       height: 2,
     },
-    shadowOpacity: 0.15,
+    shadowOpacity: 0.25,
     shadowRadius: 3.84,
+    overflow: 'hidden',
+    borderWidth: 1,
+    borderColor: theme => theme.dark ? `${theme.colors.primary}20` : theme.colors.outline,
   },
   cardTitle: {
     fontSize: 20,
     fontWeight: '600',
     paddingHorizontal: 8,
+    marginBottom: 4,
   },
   cardContent: {
     paddingHorizontal: 16,
-    paddingVertical: 8,
+    paddingVertical: 12,
   },
   preferenceRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingVertical: 12,
+    paddingVertical: 10,
     width: '100%',
   },
   preferenceText: {
     fontSize: 16,
     flex: 1,
+    marginRight: 16,
+  },
+  preferenceButton: {
+    width: 100,
+    borderRadius: 20,
+    borderColor: theme => theme.colors.primary,
+    opacity: 0.85,
+    transform: [{ scale: 0.95 }],
+    transition: 'all 0.6s ease',
+  },
+  preferenceButtonLabel: {
+    fontSize: 14,
+    fontWeight: '600',
   },
   calorieInput: {
     marginVertical: 8,
@@ -238,6 +258,7 @@ const styles = StyleSheet.create({
   recipeText: {
     lineHeight: 24,
     fontSize: 15,
+    paddingVertical: 8,
   },
   fab: {
     position: 'absolute',

@@ -1,13 +1,9 @@
 import { useState } from 'react';
-import { StyleSheet, Switch, ScrollView, TextInput } from 'react-native';
-import { GoogleGenerativeAI } from '@google/generative-ai';
-import { GEMINI_API_KEY } from '@/constants/Config';
-
+import { StyleSheet, ScrollView, Alert } from 'react-native';
+import { Card, Switch, TextInput, Button, useTheme } from 'react-native-paper';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
-import { SafeAreaView } from 'react-native-safe-area-context';
-
-const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
 
 interface SaladPreferences {
   isVegetarian: boolean;
@@ -32,8 +28,6 @@ export default function CreateScreen() {
   const generateRecipe = async () => {
     try {
       setLoading(true);
-      const model = genAI.getGenerativeModel({ model: "gemini-pro" });
-
       const preferencesText = Object.entries(preferences)
         .filter(([_, value]) => value)
         .map(([key]) => key.replace('is', '').replace(/([A-Z])/g, ' $1').trim())
@@ -44,12 +38,55 @@ export default function CreateScreen() {
       const prompt = `Create a healthy salad recipe that is ${preferencesText || 'suitable for everyone'} ${calorieText}. 
                      Include ingredients with their quantities, preparation steps, and approximate calorie count per serving. Keep it creative and flavorful.`;
 
-      const result = await model.generateContent(prompt);
-      const response = await result.response;
-      setRecipe(response.text());
+      const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          "Authorization": "Bearer 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",
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          model: "google/gemini-2.5-pro-preview-03-25",
+          messages: [
+            {
+              role: "user",
+              content: prompt
+            }
+          ]
+        })
+      });
+
+      const data = await response.json();
+      if (!data || !data.choices || !Array.isArray(data.choices) || data.choices.length === 0) {
+        throw new Error('Invalid API response: Missing or empty choices array');
+      }
+
+      const messageContent = data.choices[0]?.message?.content;
+      if (!messageContent) {
+        throw new Error('Invalid API response: Missing message content');
+      }
+
+      try {
+        // Try to parse the response as JSON first
+        const parsedResponse = JSON.parse(messageContent);
+        if (typeof parsedResponse === 'object' && parsedResponse !== null) {
+          // If it's valid JSON, stringify it nicely
+          setRecipe(JSON.stringify(parsedResponse, null, 2));
+        } else {
+          // If not a valid JSON object, use the raw content
+          setRecipe(messageContent);
+        }
+      } catch (parseError) {
+        // If not valid JSON, use the raw content
+        setRecipe(messageContent);
+      }
     } catch (error) {
       console.error('Error generating recipe:', error);
-      setRecipe('Sorry, there was an error generating your recipe. Please try again.');
+      Alert.alert(
+        'Error',
+        'Failed to generate recipe. Please check your internet connection and try again.',
+        [{ text: 'OK' }]
+      );
+      setRecipe('');
     } finally {
       setLoading(false);
     }
@@ -62,60 +99,77 @@ export default function CreateScreen() {
     }));
   };
 
+  const theme = useTheme();
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
-    <ThemedView style={styles.container}>
-      <ScrollView style={styles.scrollView}>
-        <ThemedText type="title" style={styles.title}>Create Your Salad</ThemedText>
-        
-        <ThemedView style={styles.preferencesContainer}>
-          <ThemedText type="subtitle">Dietary Preferences</ThemedText>
+      <ThemedView style={styles.container}>
+        <ScrollView style={styles.scrollView}>
+          <ThemedText type="title" style={styles.title}>Create Your Salad</ThemedText>
           
-          {Object.entries(preferences).map(([key, value]) => (
-            <ThemedView key={key} style={styles.preferenceRow}>
-              <ThemedText>{key.replace('is', '').replace(/([A-Z])/g, ' $1').trim()}</ThemedText>
-              <Switch
-                value={value}
-                onValueChange={() => togglePreference(key as keyof SaladPreferences)}
-              />
-            </ThemedView>
-          ))}
-
-          <ThemedView style={styles.calorieInputContainer}>
-            <ThemedText>Target Calories</ThemedText>
-            <TextInput
-              style={styles.calorieInput}
-              value={calorieTarget}
-              onChangeText={setCalorieTarget}
-              placeholder="Enter calorie target"
-              keyboardType="numeric"
-              placeholderTextColor="#687076"
+          <Card style={[styles.card, { backgroundColor: theme.colors.surface }]} mode="outlined">
+            <Card.Title 
+              title="Dietary Preferences" 
+              titleStyle={[styles.cardTitle, { color: theme.colors.onSurface }]} 
             />
-          </ThemedView>
+            <Card.Content style={styles.cardContent}>
+              {Object.entries(preferences).map(([key, value]) => (
+                <ThemedView key={key} style={styles.preferenceRow}>
+                  <ThemedText style={[styles.preferenceText, { color: theme.colors.onSurface }]}>
+                    {key.replace('is', '').replace(/([A-Z])/g, ' $1').trim()}
+                  </ThemedText>
+                  <Switch
+                    value={value}
+                    onValueChange={() => togglePreference(key as keyof SaladPreferences)}
+                    color={theme.colors.primary}
+                  />
+                </ThemedView>
+              ))}
+            </Card.Content>
+          </Card>
 
-          <ThemedView style={styles.buttonContainer}>
-            <ThemedView
-              style={[styles.button, loading && styles.buttonDisabled]}
-              lightColor="#0a7ea4"
-              darkColor="#1D3D47">
-              <ThemedText
-                style={styles.buttonText}
-                onPress={generateRecipe}
-                disabled={loading}>
-                {loading ? 'Generating...' : 'Generate Recipe'}
-              </ThemedText>
-            </ThemedView>
-          </ThemedView>
+          <Card style={[styles.card, { backgroundColor: theme.colors.surface }]} mode="outlined">
+            <Card.Title 
+              title="Calorie Target" 
+              titleStyle={[styles.cardTitle, { color: theme.colors.onSurface }]} 
+            />
+            <Card.Content>
+              <TextInput
+                mode="outlined"
+                label="Enter calorie target"
+                value={calorieTarget}
+                onChangeText={setCalorieTarget}
+                keyboardType="numeric"
+                style={styles.calorieInput}
+                theme={theme}
+              />
+            </Card.Content>
+          </Card>
 
           {recipe ? (
-            <ThemedView style={styles.recipeContainer}>
-              <ThemedText type="subtitle">Your Custom Recipe</ThemedText>
-              <ThemedText style={styles.recipeText}>{recipe}</ThemedText>
-            </ThemedView>
+            <Card style={[styles.card, { backgroundColor: theme.colors.surface }]} mode="outlined">
+              <Card.Title 
+                title="Your Custom Recipe" 
+                titleStyle={[styles.cardTitle, { color: theme.colors.onSurface }]} 
+              />
+              <Card.Content>
+                <ThemedText style={[styles.recipeText, { color: theme.colors.onSurface }]}>{recipe}</ThemedText>
+              </Card.Content>
+            </Card>
           ) : null}
-        </ThemedView>
-      </ScrollView>
-    </ThemedView>
+        </ScrollView>
+
+        <Button
+          mode="outlined"
+          onPress={generateRecipe}
+          loading={loading}
+          disabled={loading}
+          style={[styles.generateButton, { borderColor: theme.colors.primary }]}
+          labelStyle={[styles.generateButtonLabel, { color: theme.colors.primary }]}
+        >
+          {loading ? 'Generating...' : 'Generate Recipe'}
+        </Button>
+      </ThemedView>
     </SafeAreaView>
   );
 }
@@ -131,56 +185,43 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginVertical: 20,
   },
-  preferencesContainer: {
-    padding: 20,
-    gap: 20,
+  card: {
+    marginHorizontal: 16,
+    marginBottom: 16,
+  },
+  cardTitle: {
+    fontSize: 18,
+    fontWeight: '600',
+  },
+  cardContent: {
+    paddingHorizontal: 16,
   },
   preferenceRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingVertical: 10,
+    paddingVertical: 8,
   },
-  calorieInputContainer: {
-    marginTop: 10,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingVertical: 10,
+  preferenceText: {
+    fontSize: 16,
   },
   calorieInput: {
-    borderWidth: 1,
-    borderColor: '#687076',
-    borderRadius: 8,
-    padding: 8,
-    width: 120,
-    color: '#11181C',
+    marginVertical: 8,
   },
-  buttonContainer: {
-    alignItems: 'center',
-    marginTop: 20,
+  generateButton: {
+    margin: 16,
+    paddingVertical: 8,
   },
-  button: {
-    padding: 15,
-    borderRadius: 8,
-    minWidth: 200,
-    alignItems: 'center',
-  },
-  buttonDisabled: {
-    opacity: 0.7,
-  },
-  buttonText: {
-    color: 'white',
+  generateButtonLabel: {
     fontSize: 16,
-    fontWeight: '600',
-  },
-  recipeContainer: {
-    marginTop: 20,
-    padding: 15,
-    borderRadius: 8,
-    gap: 10,
   },
   recipeText: {
     lineHeight: 24,
+  },
+  fab: {
+    position: 'absolute',
+    margin: 16,
+    right: 0,
+    bottom: 0,
   },
 });

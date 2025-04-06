@@ -34,6 +34,13 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
+        name="caltrac"
+        options={{
+          title: 'Calories',
+          tabBarIcon: ({ color }: { color: string }) => <IconSymbol size={28} name="camera.fill" color={color} />,
+        }}
+      />
+      <Tabs.Screen
         name="Account"
         options={{
           title: 'Account',

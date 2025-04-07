@@ -13,9 +13,6 @@ Boulz is your all-in-one health assistant app – a calorie tracker, food calori
 
 📱 Cross-platform app built with React Native and Expo.
 
-📸 Screenshots
-Coming soon...
-
 🚀 Getting Started
 Prerequisites
 Node.js >= 14
@@ -76,9 +73,6 @@ Optionally extensible to Firebase or any backend
 
 🤝 Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you'd like to change.
-
-📄 License
-MIT License
 
 💡 Inspiration
 Built to help people make smarter food choices — eat clean, feel good, live better 💚

@@ -1,4 +1,7 @@
 import { useState } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+const OPENROUTER_API_KEY = '@openrouter_api_key';
 import { StyleSheet, ScrollView, Alert ,useColorScheme} from 'react-native';
 import { Card, SegmentedButtons, Searchbar, Button, useTheme } from 'react-native-paper';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -31,6 +34,17 @@ export default function CreateScreen() {
   const generateRecipe = async () => {
     try {
       setLoading(true);
+      const apiKey = await AsyncStorage.getItem(OPENROUTER_API_KEY);
+      
+      if (!apiKey) {
+        Alert.alert(
+          'API Key Required',
+          'Please set your OpenRouter API key in Settings first.',
+          [{ text: 'OK' }]
+        );
+        return;
+      }
+
       const preferencesText = Object.entries(preferences)
         .filter(([_, value]) => value)
         .map(([key]) => key.replace('is', '').replace(/([A-Z])/g, ' $1').trim())
@@ -44,7 +58,7 @@ export default function CreateScreen() {
       const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
         method: "POST",
         headers: {
-          "Authorization": "Bearer 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",
+          "Authorization": `Bearer ${apiKey}`,
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
@@ -58,16 +72,43 @@ export default function CreateScreen() {
         })
       });
 
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error(`API Error: ${response.status} - ${errorText}`);
+        throw new Error(`API request failed with status ${response.status}`);
+      }
+
       const data = await response.json();
-      if (!data || !data.choices || !Array.isArray(data.choices) || data.choices.length === 0) {
-        throw new Error('Invalid API response: Missing or empty choices array');
+      console.log('API Response:', JSON.stringify(data).substring(0, 200) + '...');
+      
+      // Extract content from the response - handle different possible response structures
+      let messageContent = '';
+      
+      if (data.choices && Array.isArray(data.choices) && data.choices.length > 0) {
+        // Standard OpenAI-compatible format
+        messageContent = data.choices[0]?.message?.content || data.choices[0]?.content || '';
+      } else if (data.content) {
+        // Direct content field
+        messageContent = data.content;
+      } else if (data.response) {
+        // Response field (some models return this)
+        messageContent = data.response;
+      } else if (typeof data === 'string') {
+        // Direct string response
+        messageContent = data;
+      } else if (typeof data === 'object') {
+        // If we got an object but none of the expected fields, stringify the whole object
+        messageContent = JSON.stringify(data, null, 2);
+      } else {
+        // Last resort fallback
+        messageContent = 'Internet Connection error . Please try again.';
       }
-
-      const messageContent = data.choices[0]?.message?.content;
+      
       if (!messageContent) {
-        throw new Error('Invalid API response: Missing message content');
+        console.error('Could not extract content from response:', data);
+        throw new Error('Could not extract content from API response');
       }
-
+      
       try {
         // Try to parse the response as JSON first
         const parsedResponse = JSON.parse(messageContent);
@@ -85,9 +126,15 @@ export default function CreateScreen() {
     } catch (error) {
       console.error('Error generating recipe:', error);
       Alert.alert(
-        'Error',
-        'Failed to generate recipe. Please check your internet connection and try again.',
-        [{ text: 'OK' }]
+        'Error', 
+        `Error generating recipe: ${error.message}. Please try again.`,
+        [
+          { text: 'OK' },
+          { 
+            text: 'Show Debug Info', 
+            onPress: () => Alert.alert('Debug Info', JSON.stringify(error, null, 2))
+          }
+        ]
       );
       setRecipe('');
     } finally {

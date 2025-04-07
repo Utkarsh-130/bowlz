@@ -1,50 +1,85 @@
-# Welcome to your Expo app 👋
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+🥗 Boulz
+Boulz is your all-in-one health assistant app – a calorie tracker, food calorie finder, and custom salad maker built with React Native using Expo and powered by the OpenRouter API. Whether you're trying to lose weight, bulk up, or just eat healthier, Boulz has your back.
 
-## Get started
+🔥 Features
+✅ Calorie Tracker – Log your meals and monitor daily calorie intake.
 
-1. Install dependencies
+🔍 Calorie Finder – Instantly get calorie info of any food item using OpenRouter’s AI.
 
-   ```bash
-   npm install
-   ```
+🥗 Salad Maker – Get personalized salad recipes based on your dietary preferences and available ingredients.
 
-2. Start the app
+🌐 Powered by OpenRouter for smart AI-assisted features.
 
-   ```bash
-    npx expo start
-   ```
+📱 Cross-platform app built with React Native and Expo.
 
-In the output, you'll find options to open the app in a
+📸 Screenshots
+Coming soon...
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+🚀 Getting Started
+Prerequisites
+Node.js >= 14
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+Expo CLI
 
-## Get a fresh project
+An OpenRouter API key
 
-When you're ready, run:
+Installation
+bash
+Copy
+Edit
 
-```bash
-npm run reset-project
-```
+cd boulz
+npm install
+Running the App
+bash
+Copy
+Edit
+npx expo start
+Scan the QR code in the Expo Go app on your phone or run it on an emulator.
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+🔑 Configuration
+Create a .env file in the root directory with your OpenRouter key:
 
-## Learn more
+env
+Copy
+Edit
+OPENROUTER_API_KEY=your_openrouter_api_key_here
+You can get your API key from openrouter.ai.
 
-To learn more about developing your project with Expo, look at the following resources:
+🧠 How it Works
+Calorie Finder: Uses natural language queries to OpenRouter API to estimate calories of foods.
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+Salad Maker: Suggests salads based on input ingredients and dietary goals using LLM responses.
 
-## Join the community
+Tracker: Stores food logs locally (or integrate with a backend if needed).
 
-Join our community of developers creating universal apps.
+🛠 Tech Stack
+React Native with Expo
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+OpenRouter API (LLM-based)
+
+AsyncStorage (for local data persistence)
+
+Optionally extensible to Firebase or any backend
+
+✨ Roadmap
+ Add user authentication
+
+ Integrate barcode scanner for packaged food
+
+ Nutrition insights and tips
+
+ Dark mode
+
+ Export logs to PDF or CSV
+
+🤝 Contributing
+Pull requests are welcome. For major changes, please open an issue first to discuss what you'd like to change.
+
+📄 License
+MIT License
+
+💡 Inspiration
+Built to help people make smarter food choices — eat clean, feel good, live better 💚
+

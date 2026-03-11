@@ -1,0 +1,1552 @@
+[
+  {
+    "item": "Butter Chicken",
+    "region": "North",
+    "calories_per_gram": 1.95
+  },
+  {
+    "item": "Paneer Butter Masala",
+    "region": "North",
+    "calories_per_gram": 2.10
+  },
+  {
+    "item": "Dal Makhani",
+    "region": "North",
+    "calories_per_gram": 1.55
+  },
+  {
+    "item": "Chole Bhature",
+    "region": "North",
+    "calories_per_gram": 2.80
+  },
+  {
+    "item": "Idli",
+    "region": "South",
+    "calories_per_gram": 0.75
+  },
+  {
+    "item": "Masala Dosa",
+    "region": "South",
+    "calories_per_gram": 1.65
+  },
+  {
+    "item": "Sambar",
+    "region": "South",
+    "calories_per_gram": 0.85
+  },
+  {
+    "item": "Medhu Vada",
+    "region": "South",
+    "calories_per_gram": 2.25
+  },
+  {
+    "item": "Hyderabadi Biryani",
+    "region": "South",
+    "calories_per_gram": 1.90
+  },
+  {
+    "item": "Rogan Josh",
+    "region": "North",
+    "calories_per_gram": 1.60
+  },
+  {
+    "item": "Dhokla",
+    "region": "West",
+    "calories_per_gram": 1.60
+  },
+  {
+    "item": "Pav Bhaji",
+    "region": "West",
+    "calories_per_gram": 1.75
+  },
+  {
+    "item": "Sandesh",
+    "region": "East",
+    "calories_per_gram": 2.20
+  },
+  {
+    "item": "Fish Curry (Bengali)",
+    "region": "East",
+    "calories_per_gram": 1.40
+  },
+  {
+    "item": "Rajma Chawal",
+    "region": "North",
+    "calories_per_gram": 1.35
+  },
+  {
+    "item": "Poha",
+    "region": "West",
+    "calories_per_gram": 1.25
+  },
+  {
+    "item": "Upma",
+    "region": "South",
+    "calories_per_gram": 1.30
+  },
+  {
+    "item": "Chicken 65",
+    "region": "South",
+    "calories_per_gram": 2.45
+  },
+  {
+    "item": "Aloo Paratha",
+    "region": "North",
+    "calories_per_gram": 2.15
+  },
+  {
+    "item": "Gulab Jamun",
+    "region": "Pan-India",
+    "calories_per_gram": 3.40
+  },
+  {
+    "item": "Pani Puri",
+    "region": "Pan-India",
+    "calories_per_gram": 1.50
+  },
+  {
+    "item": "Litti Chokha",
+    "region": "East",
+    "calories_per_gram": 2.10
+  },
+  {
+    "item": "Misal Pav",
+    "region": "West",
+    "calories_per_gram": 1.60
+  },
+  {
+    "item": "Appam",
+    "region": "South",
+    "calories_per_gram": 1.20
+  },
+  {
+    "item": "Tandoori Chicken",
+    "region": "North",
+    "calories_per_gram": 1.50
+  },
+  {
+    "item": "Bhindi Masala",
+    "region": "Pan-India",
+    "calories_per_gram": 0.90
+  },
+  {
+    "item": "Palak Paneer",
+    "region": "North",
+    "calories_per_gram": 1.35
+  },
+  {
+    "item": "Rasgulla",
+    "region": "East",
+    "calories_per_gram": 1.85
+  },
+  {
+    "item": "Lemon Rice",
+    "region": "South",
+    "calories_per_gram": 1.50
+  },
+  {
+    "item": "Jalebi",
+    "region": "Pan-India",
+    "calories_per_gram": 3.80
+  },
+  {
+    "item": "Thepla",
+    "region": "West",
+    "calories_per_gram": 2.05
+  },
+  {
+    "item": "Kadhai Paneer",
+    "region": "North",
+    "calories_per_gram": 1.90
+  },
+  {
+    "item": "Mutton Curry",
+    "region": "Pan-India",
+    "calories_per_gram": 2.40
+  },
+  {
+    "item": "Puttu",
+    "region": "South",
+    "calories_per_gram": 1.80
+  },
+  {
+    "item": "Gajar Halwa",
+    "region": "North",
+    "calories_per_gram": 1.70
+  },
+  {
+    "item": "Khandvi",
+    "region": "West",
+    "calories_per_gram": 1.45
+  },
+  {
+    "item": "Bhel Puri",
+    "region": "Pan-India",
+    "calories_per_gram": 1.80
+  },
+  {
+    "item": "Curd Rice",
+    "region": "South",
+    "calories_per_gram": 1.20
+  },
+  {
+    "item": "Chicken Tikka Masala",
+    "region": "North",
+    "calories_per_gram": 1.80
+  },
+  {
+    "item": "Fish Fry",
+    "region": "Pan-India",
+    "calories_per_gram": 2.50
+  },
+  {
+    "item": "Moong Dal Halwa",
+    "region": "North",
+    "calories_per_gram": 3.20
+  },
+  {
+    "item": "Shrikhand",
+    "region": "West",
+    "calories_per_gram": 2.80
+  },
+  {
+    "item": "Uttapam",
+    "region": "South",
+    "calories_per_gram": 1.95
+  },
+  {
+    "item": "Samosa",
+    "region": "Pan-India",
+    "calories_per_gram": 2.65
+  },
+  {
+    "item": "Dal Tadka",
+    "region": "North",
+    "calories_per_gram": 1.25
+  },
+  {
+    "item": "Vada Pav",
+    "region": "West",
+    "calories_per_gram": 2.40
+  },
+  {
+    "item": "Malai Kofta",
+    "region": "North",
+    "calories_per_gram": 2.35
+  },
+  {
+    "item": "Lassi (Sweet)",
+    "region": "North",
+    "calories_per_gram": 0.95
+  },
+  {
+    "item": "Aloo Gobi",
+    "region": "North",
+    "calories_per_gram": 1.05
+  },
+  {
+    "item": "Kerala Parotta",
+    "region": "South",
+    "calories_per_gram": 3.10
+  },
+  {
+    "item": "Dahi Vada",
+    "region": "Pan-India",
+    "calories_per_gram": 1.30
+  },
+  {
+    "item": "Prawn Curry (Goan)",
+    "region": "West",
+    "calories_per_gram": 1.65
+  },
+  {
+    "item": "Thalipeeth",
+    "region": "West",
+    "calories_per_gram": 1.85
+  },
+  {
+    "item": "Mysore Pak",
+    "region": "South",
+    "calories_per_gram": 5.10
+  },
+  {
+    "item": "Kaju Katli",
+    "region": "Pan-India",
+    "calories_per_gram": 4.30
+  },
+  {
+    "item": "Baingan Bharta",
+    "region": "North",
+    "calories_per_gram": 1.15
+  },
+  {
+    "item": "Bisibelebath",
+    "region": "South",
+    "calories_per_gram": 1.40
+  },
+  {
+    "item": "Rasam",
+    "region": "South",
+    "calories_per_gram": 0.40
+  },
+  {
+    "item": "Missi Roti",
+    "region": "North",
+    "calories_per_gram": 2.55
+  },
+  {
+    "item": "Sabudana Khichdi",
+    "region": "West",
+    "calories_per_gram": 1.70
+  },
+  {
+    "item": "Besan Ladoo",
+    "region": "Pan-India",
+    "calories_per_gram": 4.60
+  },
+  {
+    "item": "Avial",
+    "region": "South",
+    "calories_per_gram": 1.10
+  },
+  {
+    "item": "Machher Jhol",
+    "region": "East",
+    "calories_per_gram": 1.30
+  },
+  {
+    "item": "Sarson ka Saag",
+    "region": "North",
+    "calories_per_gram": 1.00
+  },
+  {
+    "item": "Makki di Roti",
+    "region": "North",
+    "calories_per_gram": 2.60
+  },
+  {
+    "item": "Poori Sabzi",
+    "region": "North",
+    "calories_per_gram": 2.40
+  },
+  {
+    "item": "Pesarattu",
+    "region": "South",
+    "calories_per_gram": 1.55
+  },
+  {
+    "item": "Vindaloo (Pork)",
+    "region": "West",
+    "calories_per_gram": 2.20
+  },
+  {
+    "item": "Kheer",
+    "region": "Pan-India",
+    "calories_per_gram": 1.80
+  },
+  {
+    "item": "Kadhai Mushroom",
+    "region": "North",
+    "calories_per_gram": 1.20
+  },
+  {
+    "item": "Cabbage Thoran",
+    "region": "South",
+    "calories_per_gram": 0.95
+  },
+  {
+    "item": "Aloo Tikki",
+    "region": "North",
+    "calories_per_gram": 1.90
+  },
+  {
+    "item": "Modak",
+    "region": "West",
+    "calories_per_gram": 2.20
+  },
+  {
+    "item": "Chakli",
+    "region": "Pan-India",
+    "calories_per_gram": 5.00
+  },
+  {
+    "item": "Pongal (Ven)",
+    "region": "South",
+    "calories_per_gram": 1.50
+  },
+  {
+    "item": "Chicken Stew (Kerala)",
+    "region": "South",
+    "calories_per_gram": 1.40
+  },
+  {
+    "item": "Amritsari Kulcha",
+    "region": "North",
+    "calories_per_gram": 2.70
+  },
+  {
+    "item": "Dhuska",
+    "region": "East",
+    "calories_per_gram": 2.30
+  },
+  {
+    "item": "Koshsha Mangsho",
+    "region": "East",
+    "calories_per_gram": 2.60
+  },
+  {
+    "item": "Medu Vada Sambar",
+    "region": "South",
+    "calories_per_gram": 1.85
+  },
+  {
+    "item": "Gobi Manchurian",
+    "region": "Pan-India",
+    "calories_per_gram": 1.95
+  },
+  {
+    "item": "Hakama Noodles (Indo-Chinese)",
+    "region": "Pan-India",
+    "calories_per_gram": 1.60
+  },
+  {
+    "item": "Chilli Chicken",
+    "region": "Pan-India",
+    "calories_per_gram": 1.85
+  },
+  {
+    "item": "Papad (Roasted)",
+    "region": "Pan-India",
+    "calories_per_gram": 3.10
+  },
+  {
+    "item": "Khichdi",
+    "region": "Pan-India",
+    "calories_per_gram": 1.15
+  },
+  {
+    "item": "Veg Pulao",
+    "region": "Pan-India",
+    "calories_per_gram": 1.50
+  },
+  {
+    "item": "Jeera Rice",
+    "region": "Pan-India",
+    "calories_per_gram": 1.35
+  },
+  {
+    "item": "Naan (Plain)",
+    "region": "North",
+    "calories_per_gram": 2.65
+  },
+  {
+    "item": "Butter Naan",
+    "region": "North",
+    "calories_per_gram": 3.15
+  },
+  {
+    "item": "Rumali Roti",
+    "region": "North",
+    "calories_per_gram": 2.50
+  },
+  {
+    "item": "Tandoori Roti",
+    "region": "North",
+    "calories_per_gram": 2.40
+  },
+  {
+    "item": "Lachha Paratha",
+    "region": "North",
+    "calories_per_gram": 2.90
+  },
+  {
+    "item": "Roti (Whole Wheat)",
+    "region": "Pan-India",
+    "calories_per_gram": 2.60
+  },
+  {
+    "item": "Kadhai Chicken",
+    "region": "North",
+    "calories_per_gram": 1.75
+  },
+  {
+    "item": "Murgh Musallam",
+    "region": "North",
+    "calories_per_gram": 2.10
+  },
+  {
+    "item": "Haleem",
+    "region": "South",
+    "calories_per_gram": 1.80
+  },
+  {
+    "item": "Chicken Dum Biryani",
+    "region": "South",
+    "calories_per_gram": 1.95
+  },
+  {
+    "item": "Egg Biryani",
+    "region": "Pan-India",
+    "calories_per_gram": 1.70
+  },
+  {
+    "item": "Mutton Biryani",
+    "region": "Pan-India",
+    "calories_per_gram": 2.20
+  },
+  {
+    "item": "Veg Biryani",
+    "region": "Pan-India",
+    "calories_per_gram": 1.55
+  },
+  {
+    "item": "Kashmiri Pulao",
+    "region": "North",
+    "calories_per_gram": 1.65
+  },
+  {
+    "item": "Matar Paneer",
+    "region": "North",
+    "calories_per_gram": 1.50
+  },
+  {
+    "item": "Shahi Paneer",
+    "region": "North",
+    "calories_per_gram": 2.05
+  },
+  {
+    "item": "Paneer Tikka",
+    "region": "North",
+    "calories_per_gram": 1.85
+  },
+  {
+    "item": "Malai Tikka",
+    "region": "North",
+    "calories_per_gram": 2.20
+  },
+  {
+    "item": "Chicken Reshmi Kabab",
+    "region": "North",
+    "calories_per_gram": 1.65
+  },
+  {
+    "item": "Seekh Kabab",
+    "region": "North",
+    "calories_per_gram": 1.90
+  },
+  {
+    "item": "Galouti Kabab",
+    "region": "North",
+    "calories_per_gram": 2.30
+  },
+  {
+    "item": "Haryali Kabab",
+    "region": "North",
+    "calories_per_gram": 1.50
+  },
+  {
+    "item": "Kakori Kabab",
+    "region": "North",
+    "calories_per_gram": 2.15
+  },
+  {
+    "item": "Fish Tikka",
+    "region": "Pan-India",
+    "calories_per_gram": 1.60
+  },
+  {
+    "item": "Prawn Fry",
+    "region": "South",
+    "calories_per_gram": 2.40
+  },
+  {
+    "item": "Crab Masala",
+    "region": "South",
+    "calories_per_gram": 1.45
+  },
+  {
+    "item": "Kozhi Curry",
+    "region": "South",
+    "calories_per_gram": 1.70
+  },
+  {
+    "item": "Beef Fry (Kerala)",
+    "region": "South",
+    "calories_per_gram": 2.60
+  },
+  {
+    "item": "Appam with Stew",
+    "region": "South",
+    "calories_per_gram": 1.35
+  },
+  {
+    "item": "Idiyappam",
+    "region": "South",
+    "calories_per_gram": 1.25
+  },
+  {
+    "item": "Veg Kurma",
+    "region": "South",
+    "calories_per_gram": 1.30
+  },
+  {
+    "item": "Coconut Chutney",
+    "region": "South",
+    "calories_per_gram": 1.90
+  },
+  {
+    "item": "Tomato Chutney",
+    "region": "South",
+    "calories_per_gram": 0.70
+  },
+  {
+    "item": "Mint Chutney",
+    "region": "Pan-India",
+    "calories_per_gram": 0.45
+  },
+  {
+    "item": "Tamarind Chutney",
+    "region": "Pan-India",
+    "calories_per_gram": 1.80
+  },
+  {
+    "item": "Peanut Chutney",
+    "region": "South",
+    "calories_per_gram": 3.40
+  },
+  {
+    "item": "Papadum (Fried)",
+    "region": "Pan-India",
+    "calories_per_gram": 4.80
+  },
+  {
+    "item": "Boondi Raita",
+    "region": "North",
+    "calories_per_gram": 1.10
+  },
+  {
+    "item": "Mix Veg Raita",
+    "region": "Pan-India",
+    "calories_per_gram": 0.65
+  },
+  {
+    "item": "Cucumber Raita",
+    "region": "Pan-India",
+    "calories_per_gram": 0.55
+  },
+  {
+    "item": "Masala Buttermilk",
+    "region": "Pan-India",
+    "calories_per_gram": 0.40
+  },
+  {
+    "item": "Sweet Lassi",
+    "region": "North",
+    "calories_per_gram": 0.98
+  },
+  {
+    "item": "Mango Lassi",
+    "region": "North",
+    "calories_per_gram": 1.10
+  },
+  {
+    "item": "Filter Coffee",
+    "region": "South",
+    "calories_per_gram": 0.50
+  },
+  {
+    "item": "Masala Tea",
+    "region": "Pan-India",
+    "calories_per_gram": 0.45
+  },
+  {
+    "item": "Thandai",
+    "region": "North",
+    "calories_per_gram": 1.25
+  },
+  {
+    "item": "Jal Jeera",
+    "region": "North",
+    "calories_per_gram": 0.25
+  },
+  {
+    "item": "Aam Panna",
+    "region": "West",
+    "calories_per_gram": 0.40
+  },
+  {
+    "item": "Sol Kadhi",
+    "region": "West",
+    "calories_per_gram": 0.60
+  },
+  {
+    "item": "Dabeli",
+    "region": "West",
+    "calories_per_gram": 2.30
+  },
+  {
+    "item": "Sev Puri",
+    "region": "West",
+    "calories_per_gram": 2.10
+  },
+  {
+    "item": "Dahi Puri",
+    "region": "West",
+    "calories_per_gram": 1.80
+  },
+  {
+    "item": "Kachori",
+    "region": "North",
+    "calories_per_gram": 3.50
+  },
+  {
+    "item": "Bread Pakora",
+    "region": "North",
+    "calories_per_gram": 2.45
+  },
+  {
+    "item": "Paneer Pakora",
+    "region": "North",
+    "calories_per_gram": 2.80
+  },
+  {
+    "item": "Pyaz Pakora",
+    "region": "North",
+    "calories_per_gram": 3.10
+  },
+  {
+    "item": "Palak Pakora",
+    "region": "North",
+    "calories_per_gram": 2.70
+  },
+  {
+    "item": "Mirchi Bada",
+    "region": "North",
+    "calories_per_gram": 2.20
+  },
+  {
+    "item": "Patra",
+    "region": "West",
+    "calories_per_gram": 1.65
+  },
+  {
+    "item": "Dhokla (Nylon)",
+    "region": "West",
+    "calories_per_gram": 1.55
+  },
+  {
+    "item": "Gujarati Kadhi",
+    "region": "West",
+    "calories_per_gram": 0.85
+  },
+  {
+    "item": "Punjabi Kadhi",
+    "region": "North",
+    "calories_per_gram": 1.10
+  },
+  {
+    "item": "Undhiyu",
+    "region": "West",
+    "calories_per_gram": 1.40
+  },
+  {
+    "item": "Puran Poli",
+    "region": "West",
+    "calories_per_gram": 2.70
+  },
+  {
+    "item": "Aamras",
+    "region": "West",
+    "calories_per_gram": 1.15
+  },
+  {
+    "item": "Basundi",
+    "region": "West",
+    "calories_per_gram": 2.40
+  },
+  {
+    "item": "Ras Malai",
+    "region": "East",
+    "calories_per_gram": 1.95
+  },
+  {
+    "item": "Cham Cham",
+    "region": "East",
+    "calories_per_gram": 3.20
+  },
+  {
+    "item": "Mishti Doi",
+    "region": "East",
+    "calories_per_gram": 1.60
+  },
+  {
+    "item": "Misti Goja",
+    "region": "East",
+    "calories_per_gram": 4.10
+  },
+  {
+    "item": "Chhena Poda",
+    "region": "East",
+    "calories_per_gram": 2.40
+  },
+  {
+    "item": "Luchi",
+    "region": "East",
+    "calories_per_gram": 3.80
+  },
+  {
+    "item": "Alu Posto",
+    "region": "East",
+    "calories_per_gram": 1.35
+  },
+  {
+    "item": "Shukto",
+    "region": "East",
+    "calories_per_gram": 0.80
+  },
+  {
+    "item": "Baingan Bhaja",
+    "region": "East",
+    "calories_per_gram": 1.90
+  },
+  {
+    "item": "Mochar Ghonto",
+    "region": "East",
+    "calories_per_gram": 1.15
+  },
+  {
+    "item": "Kosha Mangsho",
+    "region": "East",
+    "calories_per_gram": 2.60
+  },
+  {
+    "item": "Bhetki Maach Paturi",
+    "region": "East",
+    "calories_per_gram": 1.40
+  },
+  {
+    "item": "Prawn Malai Curry",
+    "region": "East",
+    "calories_per_gram": 1.85
+  },
+  {
+    "item": "Doi Maach",
+    "region": "East",
+    "calories_per_gram": 1.55
+  },
+  {
+    "item": "Beguni",
+    "region": "East",
+    "calories_per_gram": 3.20
+  },
+  {
+    "item": "Sattu Paratha",
+    "region": "East",
+    "calories_per_gram": 2.25
+  },
+  {
+    "item": "Nimki",
+    "region": "East",
+    "calories_per_gram": 4.50
+  },
+  {
+    "item": "Kheer Kadam",
+    "region": "East",
+    "calories_per_gram": 2.90
+  },
+  {
+    "item": "Pantua",
+    "region": "East",
+    "calories_per_gram": 3.30
+  },
+  {
+    "item": "Chennar Jhilipi",
+    "region": "East",
+    "calories_per_gram": 3.70
+  },
+  {
+    "item": "Patishapta",
+    "region": "East",
+    "calories_per_gram": 2.10
+  },
+  {
+    "item": "Malpua",
+    "region": "North",
+    "calories_per_gram": 3.90
+  },
+  {
+    "item": "Rabri",
+    "region": "North",
+    "calories_per_gram": 2.60
+  },
+  {
+    "item": "Kulfi",
+    "region": "North",
+    "calories_per_gram": 2.10
+  },
+  {
+    "item": "Falooda",
+    "region": "Pan-India",
+    "calories_per_gram": 1.45
+  },
+  {
+    "item": "Soan Papdi",
+    "region": "North",
+    "calories_per_gram": 4.80
+  },
+  {
+    "item": "Ghevar",
+    "region": "North",
+    "calories_per_gram": 4.20
+  },
+  {
+    "item": "Gujiya",
+    "region": "North",
+    "calories_per_gram": 3.80
+  },
+  {
+    "item": "Balushahi",
+    "region": "North",
+    "calories_per_gram": 4.10
+  },
+  {
+    "item": "Imarti",
+    "region": "North",
+    "calories_per_gram": 3.70
+  },
+  {
+    "item": "Peda",
+    "region": "North",
+    "calories_per_gram": 4.40
+  },
+  {
+    "item": "Barfi (Plain)",
+    "region": "Pan-India",
+    "calories_per_gram": 4.20
+  },
+  {
+    "item": "Coconut Barfi",
+    "region": "South",
+    "calories_per_gram": 4.50
+  },
+  {
+    "item": "Dharwad Peda",
+    "region": "South",
+    "calories_per_gram": 4.60
+  },
+  {
+    "item": "Unniyappam",
+    "region": "South",
+    "calories_per_gram": 3.10
+  },
+  {
+    "item": "Payasam",
+    "region": "South",
+    "calories_per_gram": 1.70
+  },
+  {
+    "item": "Rava Kesari",
+    "region": "South",
+    "calories_per_gram": 2.50
+  },
+  {
+    "item": "Adhirasam",
+    "region": "South",
+    "calories_per_gram": 4.20
+  },
+  {
+    "item": "Banana Chips",
+    "region": "South",
+    "calories_per_gram": 5.20
+  },
+  {
+    "item": "Murukku",
+    "region": "South",
+    "calories_per_gram": 5.10
+  },
+  {
+    "item": "Ribbon Pakoda",
+    "region": "South",
+    "calories_per_gram": 5.00
+  },
+  {
+    "item": "Pulihora (Tamarind Rice)",
+    "region": "South",
+    "calories_per_gram": 1.65
+  },
+  {
+    "item": "Bisi Bele Bath",
+    "region": "South",
+    "calories_per_gram": 1.45
+  },
+  {
+    "item": "Akki Roti",
+    "region": "South",
+    "calories_per_gram": 1.90
+  },
+  {
+    "item": "Neer Dosa",
+    "region": "South",
+    "calories_per_gram": 0.95
+  },
+  {
+    "item": "Rava Dosa",
+    "region": "South",
+    "calories_per_gram": 1.75
+  },
+  {
+    "item": "Set Dosa",
+    "region": "South",
+    "calories_per_gram": 1.40
+  },
+  {
+    "item": "Paniyaram",
+    "region": "South",
+    "calories_per_gram": 1.80
+  },
+  {
+    "item": "Kuzhambu (Kara)",
+    "region": "South",
+    "calories_per_gram": 1.10
+  },
+  {
+    "item": "Poriyal (Beans)",
+    "region": "South",
+    "calories_per_gram": 0.80
+  },
+  {
+    "item": "Kootu",
+    "region": "South",
+    "calories_per_gram": 0.95
+  }
+  {
+    "item": "Margherita Pizza",
+    "region": "Italian",
+    "calories_per_gram": 2.50
+  },
+  {
+    "item": "Spaghetti Carbonara",
+    "region": "Italian",
+    "calories_per_gram": 2.20
+  },
+  {
+    "item": "Lasagna (Beef)",
+    "region": "Italian",
+    "calories_per_gram": 1.60
+  },
+  {
+    "item": "Risotto (Mushroom)",
+    "region": "Italian",
+    "calories_per_gram": 1.30
+  },
+  {
+    "item": "Gelato (Vanilla)",
+    "region": "Italian",
+    "calories_per_gram": 1.80
+  },
+  {
+    "item": "Tiramisu",
+    "region": "Italian",
+    "calories_per_gram": 2.80
+  },
+  {
+    "item": "Sushi (Salmon Nigiri)",
+    "region": "Japanese",
+    "calories_per_gram": 1.40
+  },
+  {
+    "item": "Miso Soup",
+    "region": "Japanese",
+    "calories_per_gram": 0.35
+  },
+  {
+    "item": "Chicken Teriyaki",
+    "region": "Japanese",
+    "calories_per_gram": 1.70
+  },
+  {
+    "item": "Tempura (Shrimp)",
+    "region": "Japanese",
+    "calories_per_gram": 3.10
+  },
+  {
+    "item": "Ramen (Tonkotsu)",
+    "region": "Japanese",
+    "calories_per_gram": 0.95
+  },
+  {
+    "item": "Beef Tacos",
+    "region": "Mexican",
+    "calories_per_gram": 2.10
+  },
+  {
+    "item": "Guacamole",
+    "region": "Mexican",
+    "calories_per_gram": 1.60
+  },
+  {
+    "item": "Burrito (Chicken)",
+    "region": "Mexican",
+    "calories_per_gram": 1.80
+  },
+  {
+    "item": "Enchiladas",
+    "region": "Mexican",
+    "calories_per_gram": 1.70
+  },
+  {
+    "item": "Quesadilla (Cheese)",
+    "region": "Mexican",
+    "calories_per_gram": 2.90
+  },
+  {
+    "item": "Churros",
+    "region": "Mexican",
+    "calories_per_gram": 4.10
+  },
+  {
+    "item": "Cheeseburger",
+    "region": "American",
+    "calories_per_gram": 2.60
+  },
+  {
+    "item": "French Fries",
+    "region": "American",
+    "calories_per_gram": 3.12
+  },
+  {
+    "item": "Hot Dog",
+    "region": "American",
+    "calories_per_gram": 2.90
+  },
+  {
+    "item": "Mac and Cheese",
+    "region": "American",
+    "calories_per_gram": 1.65
+  },
+  {
+    "item": "Buffalo Wings",
+    "region": "American",
+    "calories_per_gram": 2.70
+  },
+  {
+    "item": "Apple Pie",
+    "region": "American",
+    "calories_per_gram": 2.40
+  },
+  {
+    "item": "Hummus",
+    "region": "Middle Eastern",
+    "calories_per_gram": 1.70
+  },
+  {
+    "item": "Falafel",
+    "region": "Middle Eastern",
+    "calories_per_gram": 3.30
+  },
+  {
+    "item": "Shawarma (Chicken)",
+    "region": "Middle Eastern",
+    "calories_per_gram": 1.80
+  },
+  {
+    "item": "Tabbouleh",
+    "region": "Middle Eastern",
+    "calories_per_gram": 0.90
+  },
+  {
+    "item": "Baklava",
+    "region": "Middle Eastern",
+    "calories_per_gram": 4.30
+  },
+  {
+    "item": "Baba Ganoush",
+    "region": "Middle Eastern",
+    "calories_per_gram": 0.95
+  },
+  {
+    "item": "Croissant (Plain)",
+    "region": "French",
+    "calories_per_gram": 4.05
+  },
+  {
+    "item": "Quiche Lorraine",
+    "region": "French",
+    "calories_per_gram": 2.75
+  },
+  {
+    "item": "Ratatouille",
+    "region": "French",
+    "calories_per_gram": 0.60
+  },
+  {
+    "item": "Coq au Vin",
+    "region": "French",
+    "calories_per_gram": 1.25
+  },
+  {
+    "item": "Macarons",
+    "region": "French",
+    "calories_per_gram": 4.50
+  },
+  {
+    "item": "Pad Thai",
+    "region": "Thai",
+    "calories_per_gram": 1.50
+  },
+  {
+    "item": "Tom Yum Soup",
+    "region": "Thai",
+    "calories_per_gram": 0.45
+  },
+  {
+    "item": "Green Curry (Chicken)",
+    "region": "Thai",
+    "calories_per_gram": 1.20
+  },
+  {
+    "item": "Mango Sticky Rice",
+    "region": "Thai",
+    "calories_per_gram": 1.80
+  },
+  {
+    "item": "Dim Sum (Siu Mai)",
+    "region": "Chinese",
+    "calories_per_gram": 1.90
+  },
+  {
+    "item": "Kung Pao Chicken",
+    "region": "Chinese",
+    "calories_per_gram": 1.45
+  },
+  {
+    "item": "Spring Rolls (Fried)",
+    "region": "Chinese",
+    "calories_per_gram": 2.50
+  },
+  {
+    "item": "Sweet and Sour Pork",
+    "region": "Chinese",
+    "calories_per_gram": 2.10
+  },
+  {
+    "item": "Mapo Tofu",
+    "region": "Chinese",
+    "calories_per_gram": 1.10
+  },
+  {
+    "item": "Peking Duck",
+    "region": "Chinese",
+    "calories_per_gram": 3.40
+  },
+  {
+    "item": "Bibimbap",
+    "region": "Korean",
+    "calories_per_gram": 1.25
+  },
+  {
+    "item": "Kimchi",
+    "region": "Korean",
+    "calories_per_gram": 0.15
+  },
+  {
+    "item": "Bulgogi (Beef)",
+    "region": "Korean",
+    "calories_per_gram": 1.75
+  },
+  {
+    "item": "Korean Fried Chicken",
+    "region": "Korean",
+    "calories_per_gram": 2.90
+  },
+  {
+    "item": "Tteokbokki",
+    "region": "Korean",
+    "calories_per_gram": 1.50
+  },
+  {
+    "item": "Fish and Chips",
+    "region": "British",
+    "calories_per_gram": 2.30
+  },
+  {
+    "item": "Shepherd's Pie",
+    "region": "British",
+    "calories_per_gram": 1.20
+  },
+  {
+    "item": "Beef Wellington",
+    "region": "British",
+    "calories_per_gram": 2.60
+  },
+  {
+    "item": "Moussaka",
+    "region": "Greek",
+    "calories_per_gram": 1.35
+  },
+  {
+    "item": "Greek Salad",
+    "region": "Greek",
+    "calories_per_gram": 0.75
+  },
+  {
+    "item": "Souvlaki (Chicken)",
+    "region": "Greek",
+    "calories_per_gram": 1.60
+  },
+  {
+    "item": "Spanakopita",
+    "region": "Greek",
+    "calories_per_gram": 2.40
+  },
+  {
+    "item": "Paella",
+    "region": "Spanish",
+    "calories_per_gram": 1.55
+  },
+  {
+    "item": "Gazpacho",
+    "region": "Spanish",
+    "calories_per_gram": 0.40
+  },
+  {
+    "item": "Tortilla Española",
+    "region": "Spanish",
+    "calories_per_gram": 1.65
+  },
+  {
+    "item": "Pho (Beef)",
+    "region": "Vietnamese",
+    "calories_per_gram": 0.55
+  },
+  {
+    "item": "Banh Mi",
+    "region": "Vietnamese",
+    "calories_per_gram": 2.10
+  },
+  {
+    "item": "Goulash",
+    "region": "Hungarian",
+    "calories_per_gram": 1.05
+  },
+  {
+    "item": "Wiener Schnitzel",
+    "region": "Austrian",
+    "calories_per_gram": 2.55
+  },
+  {
+    "item": "Poutine",
+    "region": "Canadian",
+    "calories_per_gram": 1.75
+  },
+  {
+    "item": "Feijoada",
+    "region": "Brazilian",
+    "calories_per_gram": 1.50
+  },
+  {
+    "item": "Nasi Goreng",
+    "region": "Indonesian",
+    "calories_per_gram": 1.65
+  },
+  {
+    "item": "Satay (Chicken)",
+    "region": "Indonesian",
+    "calories_per_gram": 1.95
+  },
+  {
+    "item": "Ceviche",
+    "region": "Peruvian",
+    "calories_per_gram": 0.90
+  },
+  {
+    "item": "Arepas",
+    "region": "Venezuelan",
+    "calories_per_gram": 2.20
+  },
+  {
+    "item": "Pierogi (Potato)",
+    "region": "Polish",
+    "calories_per_gram": 2.00
+  },
+  {
+    "item": "Borscht",
+    "region": "Eastern European",
+    "calories_per_gram": 0.45
+  },
+  {
+    "item": "Falafel Wrap",
+    "region": "Middle Eastern",
+    "calories_per_gram": 1.90
+  },
+  {
+    "item": "Fettuccine Alfredo",
+    "region": "Italian",
+    "calories_per_gram": 2.40
+  },
+  {
+    "item": "Eggplant Parmesan",
+    "region": "Italian",
+    "calories_per_gram": 1.45
+  },
+  {
+    "item": "Minestrone Soup",
+    "region": "Italian",
+    "calories_per_gram": 0.50
+  },
+  {
+    "item": "Caesar Salad",
+    "region": "American",
+    "calories_per_gram": 1.30
+  },
+  {
+    "item": "Cobb Salad",
+    "region": "American",
+    "calories_per_gram": 1.45
+  },
+  {
+    "item": "Clam Chowder",
+    "region": "American",
+    "calories_per_gram": 0.95
+  },
+  {
+    "item": "Steak Frites",
+    "region": "French",
+    "calories_per_gram": 2.20
+  },
+  {
+    "item": "Onion Soup",
+    "region": "French",
+    "calories_per_gram": 0.70
+  },
+  {
+    "item": "Beef Stroganoff",
+    "region": "Russian",
+    "calories_per_gram": 1.70
+  },
+  {
+    "item": "Chicken Kyviv",
+    "region": "Ukrainian",
+    "calories_per_gram": 2.60
+  },
+  {
+    "item": "Doner Kebab",
+    "region": "Turkish",
+    "calories_per_gram": 1.85
+  },
+  {
+    "item": "Lentil Soup",
+    "region": "Universal",
+    "calories_per_gram": 0.65
+  },
+  {
+    "item": "Grilled Cheese Sandwich",
+    "region": "Universal",
+    "calories_per_gram": 3.20
+  },
+  {
+    "item": "Pancakes",
+    "region": "American",
+    "calories_per_gram": 2.30
+  },
+  {
+    "item": "Waffles",
+    "region": "Belgian",
+    "calories_per_gram": 2.90
+  },
+  {
+    "item": "Omelette (Plain)",
+    "region": "Universal",
+    "calories_per_gram": 1.55
+  },
+  {
+    "item": "Quinoa Salad",
+    "region": "Healthy/Global",
+    "calories_per_gram": 1.20
+  },
+  {
+    "item": "Avo on Toast",
+    "region": "Modern Australian",
+    "calories_per_gram": 1.75
+  },
+  {
+    "item": "Chicken Adobo",
+    "region": "Filipino",
+    "calories_per_gram": 1.50
+  },
+  {
+    "item": "Shakshuka",
+    "region": "North African",
+    "calories_per_gram": 0.90
+  },
+  {
+    "item": "Couscous",
+    "region": "North African",
+    "calories_per_gram": 1.15
+  },
+  {
+    "item": "Tagine (Lamb)",
+    "region": "Moroccan",
+    "calories_per_gram": 1.40
+  },
+  {
+    "item": "Poke Bowl",
+    "region": "Hawaiian",
+    "calories_per_gram": 1.25
+  },
+  {
+    "item": "Bagel (Cream Cheese)",
+    "region": "American/Jewish",
+    "calories_per_gram": 2.70
+  },
+  {
+    "item": "Pretzel",
+    "region": "German",
+    "calories_per_gram": 3.10
+  },
+  {
+    "item": "Bratwurst",
+    "region": "German",
+    "calories_per_gram": 3.00
+  },
+  {
+    "item": "Sauerkraut",
+    "region": "German",
+    "calories_per_gram": 0.20
+  },
+  {
+    "item": "Spätzle",
+    "region": "German",
+    "calories_per_gram": 1.60
+  },
+  {
+    "item": "Lobster Roll",
+    "region": "American",
+    "calories_per_gram": 1.85
+  },
+  {
+    "item": "Corn on the Cob",
+    "region": "Universal",
+    "calories_per_gram": 1.05
+  },
+  {
+    "item": "Bakmi Goreng",
+    "region": "Indonesian",
+    "calories_per_gram": 1.70
+  },
+  {
+    "item": "Laksa",
+    "region": "Malaysian",
+    "calories_per_gram": 1.10
+  },
+  {
+    "item": "Nasi Lemak",
+    "region": "Malaysian",
+    "calories_per_gram": 1.80
+  },
+  {
+    "item": "Hainanese Chicken Rice",
+    "region": "Singaporean",
+    "calories_per_gram": 1.35
+  }
+]

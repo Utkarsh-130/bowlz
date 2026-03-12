@@ -1,122 +1,109 @@
 import React from 'react';
-import { View, StyleSheet, useColorScheme } from 'react-native';
-
-import { CommonActions } from '@react-navigation/native';
+import { View, Text, TouchableOpacity, useColorScheme } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Text, BottomNavigation, useTheme } from 'react-native-paper';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-  import Index from'./index';
-import SettingsScreen from'./settings'
-import Create from'./Create';
+import { Ionicons } from '@expo/vector-icons';
+import '../../global.css';
+
+import Index from './index';
+import SettingsScreen from './settings';
+import Create from './Create';
 import CalTracScreen from './caltrac';
+import { MealProvider } from '../context/MealContext';
+
 const Tab = createBottomTabNavigator();
 
-export default function TabLayout() {
-  const theme = useTheme();
+function CustomTabBar({ state, descriptors, navigation }: any) {
   const colorScheme = useColorScheme();
+  const isDark = colorScheme === 'dark';
 
   return (
-    <Tab.Navigator
-      screenOptions={{
-        headerShown: false,
-      }}
-      tabBar={({ navigation, state, descriptors, insets }) => (
-        <BottomNavigation.Bar
-          navigationState={state}
-          safeAreaInsets={insets}
-          style={{
-            backgroundColor: colorScheme === 'dark' ? '#1a1a1a' : '#ffffff'
-          }}
-          onTabPress={({ route, preventDefault }) => {
-            const event = navigation.emit({
-              type: 'tabPress',
-              target: route.key,
-              canPreventDefault: true,
-            });
+    <View className="absolute bottom-6 left-5 right-5 h-[76px] bg-[#1a1a1c] rounded-[38px] flex-row items-center justify-evenly px-2 shadow-2xl" style={{ shadowColor: '#000', shadowOffset: { width: 0, height: 10 }, shadowOpacity: 0.3, shadowRadius: 20, elevation: 10 }}>
+      {state.routes.map((route: any, index: number) => {
+        const { options } = descriptors[route.key];
+        const label =
+          options.tabBarLabel !== undefined
+            ? options.tabBarLabel
+            : options.title !== undefined
+              ? options.title
+              : route.name;
 
-            if (event.defaultPrevented) {
-              preventDefault();
-            } else {
-              navigation.dispatch({
-                ...CommonActions.navigate(route.name, route.params),
-                target: state.key,
-              });
-            }
-          }}
-          renderIcon={({ route, focused, color }) => {
-            const { options } = descriptors[route.key];
-            if (options.tabBarIcon) {
-              return options.tabBarIcon({ focused, color, size: 24 });
-            }
-            return null;
-          }}
-          getLabelText={({ route }) => {
-            const { options } = descriptors[route.key];
-            const label =
-              options.tabBarLabel !== undefined
-                ? options.tabBarLabel.toString()
-                : options.title !== undefined
-                ? options.title
-                : route.name;
+        const isFocused = state.index === index;
 
-            return label;
-          }}
-        />
-      )}
-    >
+        const onPress = () => {
+          const event = navigation.emit({
+            type: 'tabPress',
+            target: route.key,
+            canPreventDefault: true,
+          });
 
+          if (!isFocused && !event.defaultPrevented) {
+            navigation.navigate(route.name);
+          }
+        };
 
-    
-      <Tab.Screen
-        name="Home"
-        component={Index}
-        options={{
-          tabBarLabel: 'Home',
-          tabBarIcon: ({ color, size }) => {
-            return <Icon name="home" size={size} color={color} />;
-          },
-        }}
-      />
-       <Tab.Screen
-        name="Create"
-        component={Create}
-        options={{
-          tabBarLabel: 'Create',
-          tabBarIcon: ({ color, size }) => {
-            return <Icon name="plus-circle" size={size} color={color} />;
-          },
-        }}
-      />
-       <Tab.Screen
-        name="Caltrac"
-        component={CalTracScreen}
-        options={{
-          tabBarLabel: 'Caltrac',
-          tabBarIcon: ({ color, size }) => {
-            return <Icon name="calculator" size={size} color={color} />;
-          },
-        }}
-      />
-      <Tab.Screen
-        name="Settings"
-        component={SettingsScreen}
-        options={{
-          tabBarLabel: 'Settings',
-          tabBarIcon: ({ color, size }) => {
-            return <Icon name="cog" size={size} color={color} />;
-          },
-        }}
-      />
-    </Tab.Navigator>
+        if (route.name === 'Create') {
+          return (
+            <View key={route.key} className="flex-1 items-center justify-center relative bottom-6">
+              <TouchableOpacity onPress={onPress} activeOpacity={0.8}>
+                <View className={`w-[72px] h-[72px] rounded-full bg-[#1a1a1c] items-center justify-center border-[6px] ${isDark ? 'border-zinc-950' : 'border-[#f4f5f9]'}`}>
+                  <View className="w-full h-full rounded-full items-center justify-center overflow-hidden" style={{ backgroundColor: '#ff6b6b' }}>
+                    <View className="w-[150%] h-[150%] absolute rounded-full bg-[#ff8787] opacity-60" style={{ transform: [{ translateY: -15 }] }} />
+                    <View className="w-[100%] h-[100%] absolute rounded-full bg-[#fa5252] opacity-80" style={{ transform: [{ translateX: -10 }] }} />
+                    <Ionicons name="add" size={32} color="white" />
+                  </View>
+                </View>
+              </TouchableOpacity>
+            </View>
+          );
+        }
+
+        let iconName = 'home-outline';
+        if (route.name === 'Home') iconName = isFocused ? 'home' : 'home-outline';
+        if (route.name === 'Caltrac') iconName = isFocused ? 'pie-chart' : 'pie-chart-outline';
+
+        return (
+          <TouchableOpacity
+            key={route.key}
+            accessibilityRole="button"
+            accessibilityState={isFocused ? { selected: true } : {}}
+            accessibilityLabel={options.tabBarAccessibilityLabel}
+            testID={options.tabBarTestID}
+            onPress={onPress}
+            className="items-center justify-center flex-1"
+          >
+            <Ionicons name={iconName as any} size={24} color={isFocused ? 'white' : '#a1a1aa'} />
+            <Text className={`text-[10px] mt-1 ${isFocused ? 'text-white font-semibold' : 'text-[#a1a1aa] font-medium'}`}>
+              {label}
+            </Text>
+            {isFocused && <View className="w-[5px] h-[5px] bg-white rounded-full mt-[3px]" />}
+          </TouchableOpacity>
+        );
+      })}
+    </View>
   );
 }
 
+export default function TabLayout() {
+  const colorScheme = useColorScheme();
+  const isDark = colorScheme === 'dark';
 
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});
+  return (
+    <MealProvider>
+      <View style={{ flex: 1, backgroundColor: isDark ? '#09090b' : '#f4f5f9' }}>
+        <Tab.Navigator
+          tabBar={(props) => <CustomTabBar {...props} />}
+          screenOptions={{ headerShown: false }}
+        >
+          <Tab.Screen name="Home" component={Index} />
+          <Tab.Screen name="Create" component={Create} />
+          <Tab.Screen name="Caltrac" component={CalTracScreen} />
+          <Tab.Screen 
+            name="Settings" 
+            component={SettingsScreen} 
+            options={{ tabBarButton: () => null }} 
+          />
+        </Tab.Navigator>
+      </View>
+    </MealProvider>
+  );
+}

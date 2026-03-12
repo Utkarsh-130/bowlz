@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import { View, Image, StyleSheet, ActivityIndicator, Alert } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
-import { ThemedText } from './ThemedText';
-import { ThemedView } from './ThemedView';
-import { Button } from 'react-native-paper';
+import { Button, Layout, Text } from '@ui-kitten/components';
 
 interface CalorieResponse {
   calories: number;
@@ -18,7 +16,7 @@ export default function Caltrac() {
 
   const pickImage = async () => {
     const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
-    
+
     if (status !== 'granted') {
       Alert.alert('Permission Required', 'Sorry, we need camera roll permissions to make this work!');
       return;
@@ -38,41 +36,40 @@ export default function Caltrac() {
     }
   };
 
-  // Helper function to extract JSON from text that might contain markdown or other formatting
   const extractJsonFromText = (text: string): any => {
     try {
-      // First try: direct JSON parse
+      // getting the data from the json 
       return JSON.parse(text);
     } catch (e) {
       try {
-        // Second try: Look for JSON object pattern
+
         const jsonMatch = text.match(/\{[\s\S]*\}/);
         if (jsonMatch) {
           return JSON.parse(jsonMatch[0]);
         }
       } catch (e2) {
-        // Third try: Look for code blocks
+
         try {
           const codeBlockMatch = text.match(/```(?:json)?\s*([\s\S]*?)\s*```/);
           if (codeBlockMatch && codeBlockMatch[1]) {
             return JSON.parse(codeBlockMatch[1]);
           }
         } catch (e3) {
-          // Fourth try: Try to create a simple object from the text
+          //Trying to create a simple object from the text
           if (text.includes("calories") && (text.includes("food") || text.includes("items"))) {
-            // Very basic extraction
+
             const caloriesMatch = text.match(/calories[:\s]+(\d+)/i);
-            const foodItemsText = text.split("food items")[1] || 
-                                 text.split("foods")[1] || 
-                                 text.split("items")[1] || "";
-            
+            const foodItemsText = text.split("food items")[1] ||
+              text.split("foods")[1] ||
+              text.split("items")[1] || "";
+
             const calories = caloriesMatch ? parseInt(caloriesMatch[1]) : 0;
             const foodItems = foodItemsText
               .replace(/[^\w\s,]/g, '')
               .split(',')
               .map(item => item.trim())
               .filter(item => item.length > 0);
-              
+
             return { calories, foodItems };
           }
         }
@@ -84,18 +81,18 @@ export default function Caltrac() {
   const analyzeImage = async (base64Image: string) => {
     setLoading(true);
     setDebugInfo('');
-    
+
     try {
-      // Simplified prompt that explicitly asks for JSON
+
       const prompt = "Analyze this food image. Return ONLY a JSON object with these fields: calories (number) and foodItems (array of strings). Example: {\"calories\": 500, \"foodItems\": [\"apple\", \"banana\"]}";
-      
+
       const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
         method: "POST",
         headers: {
           "Authorization": "Bearer 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",
           "Content-Type": "application/json",
-          "HTTP-Referer": "https://your-app-domain.com", // Add your app domain
-          "X-Title": "CalTrack App" // Add your app name
+          "HTTP-Referer": "https://your-app-domain.com",
+          "X-Title": "CalTrack App"
         },
         body: JSON.stringify({
           model: "google/gemini-2.5-pro-preview-03-25",
@@ -124,10 +121,10 @@ export default function Caltrac() {
 
       const data = await response.json();
       setDebugInfo(`API Response: ${JSON.stringify(data).substring(0, 200)}...`);
-      
+
       // Extract content from the response
       let content = '';
-      
+
       // Handle different possible response structures from OpenRouter API
       if (data.choices && Array.isArray(data.choices) && data.choices.length > 0) {
         // Standard OpenAI-compatible format
@@ -142,51 +139,48 @@ export default function Caltrac() {
         // The API might have directly returned the JSON object we need
         return setResult({
           calories: typeof data.calories === 'number' ? data.calories : parseInt(data.calories) || 0,
-          foodItems: Array.isArray(data.foodItems) ? data.foodItems : 
-                    (typeof data.foodItems === 'string' ? data.foodItems.split(',').map(item => item.trim()) : [])
+          foodItems: Array.isArray(data.foodItems) ? data.foodItems :
+            (typeof data.foodItems === 'string' ? data.foodItems.split(',').map((item: string) => item.trim()) : [])
         });
       } else {
         // Log the full response for debugging
         setDebugInfo(`Unexpected response structure: ${JSON.stringify(data)}`);
         throw new Error('Unexpected API response structure');
       }
-      
-      // If content is empty but we got this far, try to use the whole response as content
+
       if (!content && typeof data === 'object') {
         content = JSON.stringify(data);
       }
-      
-      // Try to parse the content as JSON or extract JSON from it
+
       let parsedData;
       try {
         parsedData = extractJsonFromText(content);
-      } catch (parseError) {
+      } catch (parseError: any) {
         setDebugInfo(`Parse error: ${parseError.message}\nContent: ${content.substring(0, 200)}...`);
         throw new Error('Failed to parse response as JSON');
       }
-      
-      // Create a normalized response
+
       const normalizedResponse: CalorieResponse = {
-        calories: typeof parsedData.calories === 'number' ? 
-                 parsedData.calories : 
-                 parseInt(parsedData.calories) || 0,
-        foodItems: Array.isArray(parsedData.foodItems) ? 
-                  parsedData.foodItems : 
-                  (typeof parsedData.foodItems === 'string' ? 
-                   parsedData.foodItems.split(',').map(item => item.trim()) : 
-                   [])
+        calories: typeof parsedData.calories === 'number' ?
+          parsedData.calories :
+          parseInt(parsedData.calories) || 0,
+        foodItems: Array.isArray(parsedData.foodItems) ?
+          parsedData.foodItems :
+          (typeof parsedData.foodItems === 'string' ?
+            parsedData.foodItems.split(',').map((item: string) => item.trim()) :
+            [])
       };
-      
+
       setResult(normalizedResponse);
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error analyzing image:', error);
       Alert.alert(
-        'Error', 
+        'Error',
         `Error analyzing image: ${error.message}. Please try again.`,
         [
           { text: 'OK' },
-          { 
-            text: 'Show Debug Info', 
+          {
+            text: 'Show Debug Info',
             onPress: () => Alert.alert('Debug Info', debugInfo || 'No debug info available')
           }
         ]
@@ -197,9 +191,8 @@ export default function Caltrac() {
   };
 
   return (
-    <ThemedView style={styles.container}>
-      <Button 
-        mode="contained" 
+    <Layout style={styles.container}>
+      <Button
         onPress={pickImage}
         style={styles.uploadButton}
       >
@@ -213,26 +206,26 @@ export default function Caltrac() {
       {loading && (
         <View style={styles.loadingContainer}>
           <ActivityIndicator size="large" color="#0000ff" />
-          <ThemedText>Analyzing image...</ThemedText>
+          <Text>Analyzing image...</Text>
         </View>
       )}
 
       {result && (
         <View style={styles.resultContainer}>
-          <ThemedText style={styles.calorieText}>
+          <Text style={styles.calorieText}>
             Estimated Calories: {result.calories}
-          </ThemedText>
-          <ThemedText style={styles.foodItemsTitle}>Identified Foods:</ThemedText>
+          </Text>
+          <Text style={styles.foodItemsTitle}>Identified Foods:</Text>
           {result.foodItems.length > 0 ? (
             result.foodItems.map((item, index) => (
-              <ThemedText key={index} style={styles.foodItem}>• {item}</ThemedText>
+              <Text key={index} style={styles.foodItem}>• {item}</Text>
             ))
           ) : (
-            <ThemedText style={styles.foodItem}>No food items identified</ThemedText>
+            <Text style={styles.foodItem}>No food items identified</Text>
           )}
         </View>
       )}
-    </ThemedView>
+    </Layout>
   );
 }
 

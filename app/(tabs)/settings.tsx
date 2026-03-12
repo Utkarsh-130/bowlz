@@ -1,23 +1,21 @@
-import React from 'react';
-import { ScrollView, StyleSheet, Animated } from 'react-native';
-import { List, Switch, useTheme, TextInput, Surface, IconButton } from 'react-native-paper';
-import { ThemedView } from '@/components/ThemedView';
-import { useThemePreference } from '@/hooks/useThemePreference';
-import { IconSymbol } from '@/components/ui/IconSymbol';
+import React, { useState, useEffect } from 'react';
+import { View, Text, ScrollView, TouchableOpacity, Switch, TextInput, useColorScheme, StatusBar } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { Ionicons, Feather } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const OPENROUTER_API_KEY = '@openrouter_api_key';
 
 export default function SettingsScreen() {
-  const theme = useTheme();
-  const { theme: currentTheme, themePreference, setThemePreference } = useThemePreference();
-  const [notificationsEnabled, setNotificationsEnabled] = React.useState(true);
-  const [emailUpdates, setEmailUpdates] = React.useState(false);
-  const [apiKey, setApiKey] = React.useState('');
-  const [isEditing, setIsEditing] = React.useState(false);
-  const [pressedScale] = React.useState(new Animated.Value(1));
+  const colorScheme = useColorScheme();
+  const isDark = colorScheme === 'dark';
+  
+  const [notificationsEnabled, setNotificationsEnabled] = useState(true);
+  const [emailUpdates, setEmailUpdates] = useState(false);
+  const [apiKey, setApiKey] = useState('');
+  const [isEditing, setIsEditing] = useState(false);
 
-  React.useEffect(() => {
+  useEffect(() => {
     loadApiKey();
   }, []);
 
@@ -32,167 +30,127 @@ export default function SettingsScreen() {
     }
   };
 
-  const saveApiKey = async (newApiKey: string) => {
+  const saveApiKey = async () => {
     try {
-      await AsyncStorage.setItem(OPENROUTER_API_KEY, newApiKey);
-      setApiKey(newApiKey);
+      await AsyncStorage.setItem(OPENROUTER_API_KEY, apiKey);
       setIsEditing(false);
     } catch (error) {
       console.error('Error saving API key:', error);
     }
   };
 
-  const toggleDarkTheme = () => {
-    setThemePreference(themePreference === 'system' ? (currentTheme === 'dark' ? 'light' : 'dark') : 'system');
-  };
-
-  const onPressIn = () => {
-    Animated.spring(pressedScale, {
-      toValue: 0.95,
-      useNativeDriver: true,
-    }).start();
-  };
-
-  const onPressOut = () => {
-    Animated.spring(pressedScale, {
-      toValue: 1,
-      useNativeDriver: true,
-    }).start();
-  };
+  const SettingItem = ({ icon, title, subtitle, right, last }: any) => (
+    <View className={`flex-row items-center justify-between p-4 ${!last ? 'border-b' : ''} ${isDark ? 'border-zinc-800' : 'border-zinc-100'}`}>
+      <View className="flex-row items-center flex-1">
+        <View className={`w-10 h-10 rounded-full items-center justify-center ${isDark ? 'bg-zinc-800' : 'bg-zinc-50'}`}>
+          <Ionicons name={icon} size={20} color={isDark ? '#e4e4e7' : '#18181b'} />
+        </View>
+        <View className="ml-4 flex-1">
+          <Text className={`text-[15px] font-bold ${isDark ? 'text-white' : 'text-zinc-900'}`}>{title}</Text>
+          {subtitle && <Text className={`text-[12px] mt-0.5 ${isDark ? 'text-zinc-400' : 'text-zinc-500'}`}>{subtitle}</Text>}
+        </View>
+      </View>
+      {right}
+    </View>
+  );
 
   return (
-    <ThemedView style={styles.container}>
-      <ScrollView>
-        <Surface style={[styles.card, { backgroundColor: theme.colors.elevation.level2 }]}>
-          <List.Section>
-            <List.Subheader style={styles.sectionHeader}>Appearance</List.Subheader>
-            <List.Item
-              title="Dark Mode"
-              left={props => <IconSymbol {...props} size={24} name="moon.fill" color={theme.colors.onSurface} />}
-              right={() => (
-                <Switch
-                  value={currentTheme === 'dark'}
-                  onValueChange={toggleDarkTheme}
-                  color={theme.colors.primary}
-                />
-              )}
-            />
-          </List.Section>
-        </Surface>
+    <SafeAreaView className={`flex-1 ${isDark ? 'bg-zinc-950' : 'bg-[#f4f5f9]'}`} edges={['top']}>
+      <StatusBar barStyle={isDark ? 'light-content' : 'dark-content'} />
+      <ScrollView className="flex-1" showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 110 }}>
+        
+        <View className="px-5 pt-10 pb-6 items-center">
+          <Text className={`text-3xl font-black tracking-tight ${isDark ? 'text-white' : 'text-zinc-900'}`}>Settings</Text>
+          <Text className={`text-[14px] mt-2 font-medium ${isDark ? 'text-zinc-400' : 'text-zinc-500'}`}>Personalize your experience</Text>
+        </View>
 
-        <Surface style={[styles.card, { backgroundColor: theme.colors.elevation.level2 }]}>
-          <List.Section>
-            <List.Subheader style={styles.sectionHeader}>Notifications</List.Subheader>
-            <List.Item
-              title="Push Notifications"
-              description="Receive alerts and reminders"
-              left={props => <IconSymbol {...props} size={24} name="bell.fill" color={theme.colors.onSurface} />}
-              right={() => (
-                <Switch
-                  value={notificationsEnabled}
-                  onValueChange={setNotificationsEnabled}
-                  color={theme.colors.primary}
-                />
-              )}
+        <View className="px-5 mt-4">
+          <Text className={`text-[17px] font-bold mb-3 ${isDark ? 'text-zinc-400' : 'text-zinc-500'}`}>Appearance</Text>
+          <View className={`rounded-[24px] overflow-hidden border ${isDark ? 'bg-zinc-900 border-zinc-800' : 'bg-white border-zinc-100'}`}>
+            <SettingItem 
+              icon="moon-outline" 
+              title="Dark Mode" 
+              subtitle="Always on dark aesthetic"
+              right={<Switch value={true} disabled trackColor={{ false: '#71717a', true: '#10b981' }} />}
+              last
             />
-            <List.Item
-              title="Email Updates"
-              description="Receive weekly summaries"
-              left={props => <IconSymbol {...props} size={24} name="envelope.fill" color={theme.colors.onSurface} />}
-              right={() => (
-                <Switch
-                  value={emailUpdates}
-                  onValueChange={setEmailUpdates}
-                  color={theme.colors.primary}
-                />
-              )}
+          </View>
+        </View>
+
+        <View className="px-5 mt-8">
+          <Text className={`text-[17px] font-bold mb-3 ${isDark ? 'text-zinc-400' : 'text-zinc-500'}`}>Notifications</Text>
+          <View className={`rounded-[24px] overflow-hidden border ${isDark ? 'bg-zinc-900 border-zinc-800' : 'bg-white border-zinc-100'}`}>
+            <SettingItem 
+              icon="notifications-outline" 
+              title="Push Notifications" 
+              subtitle="Receive alerts and reminders"
+              right={<Switch value={notificationsEnabled} onValueChange={setNotificationsEnabled} trackColor={{ false: '#71717a', true: '#10b981' }} />}
             />
-          </List.Section>
-        </Surface>
+            <SettingItem 
+              icon="mail-outline" 
+              title="Email Updates" 
+              subtitle="Weekly summaries and news"
+              right={<Switch value={emailUpdates} onValueChange={setEmailUpdates} trackColor={{ false: '#71717a', true: '#10b981' }} />}
+              last
+            />
+          </View>
+        </View>
 
-        <Surface style={[styles.card, { backgroundColor: theme.colors.elevation.level2 }]}>
-          <List.Section>
-            <List.Subheader style={styles.sectionHeader}>API Configuration</List.Subheader>
-            {isEditing ? (
-              <List.Item
-                title="OpenRouter API Key"
-                description={
-                  <TextInput
-                    value={apiKey}
-                    onChangeText={setApiKey}
-                    secureTextEntry
-                    mode="flat"
-                    style={{ backgroundColor: 'transparent' }}
-                    right={<TextInput.Icon icon="check" onPress={() => saveApiKey(apiKey)} />}
-                  />
-                }
-                left={props => <IconSymbol {...props} size={24} name="key.fill" color={theme.colors.onSurface} />}
-              />
-            ) : (
-              <List.Item
-                title="OpenRouter API Key"
-                description={apiKey ? '••••••••' + apiKey.slice(-4) : 'Not set'}
-                left={props => <IconSymbol {...props} size={24} name="key.fill" color={theme.colors.onSurface} />}
-                onPress={() => setIsEditing(true)}
-                right={props => <IconButton {...props} icon="pencil" onPress={() => setIsEditing(true)} />}
-              />
-            )}
-          </List.Section>
-        </Surface>
+        <View className="px-5 mt-8">
+          <Text className={`text-[17px] font-bold mb-3 ${isDark ? 'text-zinc-400' : 'text-zinc-500'}`}>API Configuration</Text>
+          <View className={`rounded-[24px] overflow-hidden border ${isDark ? 'bg-zinc-900 border-zinc-800' : 'bg-white border-zinc-100'}`}>
+            <View className="p-4">
+              <View className="flex-row items-center mb-3">
+                 <View className={`w-10 h-10 rounded-full items-center justify-center ${isDark ? 'bg-zinc-800' : 'bg-zinc-50'}`}>
+                    <Ionicons name="key-outline" size={20} color={isDark ? '#e4e4e7' : '#18181b'} />
+                 </View>
+                 <Text className={`ml-4 text-[15px] font-bold ${isDark ? 'text-white' : 'text-zinc-900'}`}>OpenRouter API Key</Text>
+              </View>
+              
+              {isEditing ? (
+                <View className="flex-row gap-3">
+                  <View className={`flex-1 h-12 rounded-xl px-4 flex-row items-center border ${isDark ? 'bg-zinc-950 border-zinc-800' : 'bg-zinc-50 border-zinc-100'}`}>
+                     <TextInput 
+                        className={`flex-1 text-[14px] ${isDark ? 'text-white' : 'text-zinc-900'}`}
+                        value={apiKey}
+                        onChangeText={setApiKey}
+                        placeholder="Enter API Key"
+                        placeholderTextColor={isDark ? '#71717a' : '#a1a1aa'}
+                        secureTextEntry
+                     />
+                  </View>
+                  <TouchableOpacity onPress={saveApiKey} className="h-12 px-5 bg-zinc-900 dark:bg-white rounded-xl items-center justify-center">
+                    <Text className="font-bold text-white dark:text-zinc-900">Save</Text>
+                  </TouchableOpacity>
+                </View>
+              ) : (
+                <View className="flex-row items-center justify-between">
+                  <Text className={`text-[13px] ${isDark ? 'text-zinc-400' : 'text-zinc-500'}`}>
+                    {apiKey ? '••••••••' + apiKey.slice(-4) : 'Not configured'}
+                  </Text>
+                  <TouchableOpacity onPress={() => setIsEditing(true)} className={`h-10 px-4 rounded-xl items-center justify-center border ${isDark ? 'border-zinc-800' : 'border-zinc-200'}`}>
+                    <Text className={`text-[13px] font-bold ${isDark ? 'text-white' : 'text-zinc-900'}`}>Edit</Text>
+                  </TouchableOpacity>
+                </View>
+              )}
+            </View>
+          </View>
+        </View>
 
-        <Animated.View style={{ transform: [{ scale: pressedScale }] }}>
-          <Surface style={[styles.card, { backgroundColor: theme.colors.elevation.level2 }]}>
-            <List.Section>
-              <List.Subheader style={styles.sectionHeader}>Account</List.Subheader>
-              <List.Item
-                title="Profile"
-                description="Manage your account information"
-                left={props => <IconSymbol {...props} size={24} name="person.fill" color={theme.colors.onSurface} />}
-                right={props => <IconButton {...props} icon="chevron-right" />}
-                onPress={() => {}}
-                onPressIn={onPressIn}
-                onPressOut={onPressOut}
-              />
-              <List.Item
-                title="Privacy"
-                description="Control your data and privacy settings"
-                left={props => <IconSymbol {...props} size={24} name="lock.fill" color={theme.colors.onSurface} />}
-                right={props => <IconButton {...props} icon="chevron-right" />}
-                onPress={() => {}}
-                onPressIn={onPressIn}
-                onPressOut={onPressOut}
-              />
-              <List.Item
-                title="Help & Support"
-                description="Get assistance and view documentation"
-                left={props => <IconSymbol {...props} size={24} name="questionmark.circle.fill" color={theme.colors.onSurface} />}
-                right={props => <IconButton {...props} icon="chevron-right" />}
-                onPress={() => {}}
-                onPressIn={onPressIn}
-                onPressOut={onPressOut}
-              />
-            </List.Section>
-          </Surface>
-        </Animated.View>
+        <View className="px-5 mt-8">
+          <Text className={`text-[17px] font-bold mb-3 ${isDark ? 'text-zinc-400' : 'text-zinc-500'}`}>Account</Text>
+          <View className={`rounded-[24px] overflow-hidden border ${isDark ? 'bg-zinc-900 border-zinc-800' : 'bg-white border-zinc-100'}`}>
+            <SettingItem icon="person-outline" title="Profile" subtitle="Account details & more" right={<Ionicons name="chevron-forward" size={18} color="#71717a" />} />
+            <SettingItem icon="shield-checkmark-outline" title="Privacy" subtitle="Data & security levels" right={<Ionicons name="chevron-forward" size={18} color="#71717a" />} />
+            <SettingItem icon="help-circle-outline" title="Support" subtitle="Documentation & FAQs" right={<Ionicons name="chevron-forward" size={18} color="#71717a" />} last />
+          </View>
+        </View>
+
+        <View className="px-5 mt-12 mb-10 items-center">
+          <Text className="text-zinc-500 text-[11px] font-medium tracking-widest uppercase">Bowlz v1.0.0</Text>
+        </View>
+
       </ScrollView>
-    </ThemedView>
+    </SafeAreaView>
   );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  card: {
-    margin: 12,
-    borderRadius: 12,
-    elevation: 2,
-    overflow: 'hidden',
-  },
-  sectionHeader: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: theme => theme.colors.primary,
-    paddingVertical: 8,
-  },
-});
+}

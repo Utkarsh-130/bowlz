@@ -1,13 +1,10 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
+import { View, Text, ScrollView, TouchableOpacity, TextInput, Alert, useColorScheme, StatusBar, ActivityIndicator } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { Ionicons, Feather, MaterialCommunityIcons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const OPENROUTER_API_KEY = '@openrouter_api_key';
-import { StyleSheet, ScrollView, Alert ,useColorScheme} from 'react-native';
-import { Card, SegmentedButtons, Searchbar, Button, useTheme } from 'react-native-paper';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
-import { View } from 'react-native';
 
 interface SaladPreferences {
   isVegetarian: boolean;
@@ -18,8 +15,9 @@ interface SaladPreferences {
 }
 
 export default function CreateScreen() {
-  const theme = useTheme();
   const colorScheme = useColorScheme();
+  const isDark = colorScheme === 'dark';
+
   const [preferences, setPreferences] = useState<SaladPreferences>({
     isVegetarian: false,
     isVegan: false,
@@ -30,6 +28,13 @@ export default function CreateScreen() {
   const [calorieTarget, setCalorieTarget] = useState<string>('');
   const [recipe, setRecipe] = useState<string>('');
   const [loading, setLoading] = useState(false);
+
+  const togglePreference = (key: keyof SaladPreferences) => {
+    setPreferences(prev => ({
+      ...prev,
+      [key]: !prev[key]
+    }));
+  };
 
   const generateRecipe = async () => {
     try {
@@ -62,259 +67,114 @@ export default function CreateScreen() {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          model: "google/gemini-2.5-pro-preview-03-25",
-          messages: [
-            {
-              role: "user",
-              content: prompt
-            }
-          ]
+          model: "google/gemini-2.0-pro-exp-02-05:free",
+          messages: [{ role: "user", content: prompt }]
         })
       });
 
-      if (!response.ok) {
-        const errorText = await response.text();
-        console.error(`API Error: ${response.status} - ${errorText}`);
-        throw new Error(`API request failed with status ${response.status}`);
-      }
+      if (!response.ok) throw new Error(`API error: ${response.status}`);
 
       const data = await response.json();
-      console.log('API Response:', JSON.stringify(data).substring(0, 200) + '...');
-      
-      // Extract content from the response - handle different possible response structures
-      let messageContent = '';
-      
-      if (data.choices && Array.isArray(data.choices) && data.choices.length > 0) {
-        // Standard OpenAI-compatible format
-        messageContent = data.choices[0]?.message?.content || data.choices[0]?.content || '';
-      } else if (data.content) {
-        // Direct content field
-        messageContent = data.content;
-      } else if (data.response) {
-        // Response field (some models return this)
-        messageContent = data.response;
-      } else if (typeof data === 'string') {
-        // Direct string response
-        messageContent = data;
-      } else if (typeof data === 'object') {
-        // If we got an object but none of the expected fields, stringify the whole object
-        messageContent = JSON.stringify(data, null, 2);
-      } else {
-        // Last resort fallback
-        messageContent = 'Internet Connection error . Please try again.';
-      }
-      
-      if (!messageContent) {
-        console.error('Could not extract content from response:', data);
-        throw new Error('Could not extract content from API response');
-      }
-      
-      try {
-        // Try to parse the response as JSON first
-        const parsedResponse = JSON.parse(messageContent);
-        if (typeof parsedResponse === 'object' && parsedResponse !== null) {
-          // If it's valid JSON, stringify it nicely
-          setRecipe(JSON.stringify(parsedResponse, null, 2));
-        } else {
-          // If not a valid JSON object, use the raw content
-          setRecipe(messageContent);
-        }
-      } catch (parseError) {
-        // If not valid JSON, use the raw content
-        setRecipe(messageContent);
-      }
-    } catch (error) {
-      console.error('Error generating recipe:', error);
-      Alert.alert(
-        'Error', 
-        `Error generating recipe: ${error.message}. Please try again.`,
-        [
-          { text: 'OK' },
-          { 
-            text: 'Show Debug Info', 
-            onPress: () => Alert.alert('Debug Info', JSON.stringify(error, null, 2))
-          }
-        ]
-      );
-      setRecipe('');
+      const content = data.choices?.[0]?.message?.content || 'No recipe generated.';
+      setRecipe(content);
+
+    } catch (error: any) {
+      Alert.alert('Error', error.message);
     } finally {
       setLoading(false);
     }
   };
 
-  const togglePreference = (key: keyof SaladPreferences) => {
-    setPreferences(prev => ({
-      ...prev,
-      [key]: !prev[key]
-    }));
-  };
-
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <ThemedView style={styles.container}>
-        <ScrollView style={styles.scrollView}>
-          <ThemedText type="title" style={styles.title}>Create Your Salad</ThemedText>
-          
-          <Card style={[styles.card, { backgroundColor: theme.colors.surface }]} mode="outlined">
-            <Card.Title 
-              title="Dietary Preferences" 
-              titleStyle={[styles.cardTitle, { color: theme.colors.onSurface }]} 
-            />
-            <Card.Content style={styles.cardContent}>
-              {Object.entries(preferences).map(([key, value]) => (
-                <View key={key} style={styles.preferenceRow}>
-                  <ThemedText style={[styles.preferenceText, { color: theme.colors.onSurface }]}>
-                    {key.replace('is', '').replace(/([A-Z])/g, ' $1').trim()}
-                  </ThemedText>
-                  <Button
-                    mode={value ? 'contained' : 'outlined'}
-                    onPress={() => togglePreference(key as keyof SaladPreferences)}
-                    style={[styles.preferenceButton, value && { backgroundColor: theme.colors.primary }]}
-                    labelStyle={[styles.preferenceButtonLabel, value && { color: theme.colors.onPrimary }]}
-                  >
-                    {value ? 'Yes' : 'No'}
-                  </Button>
-                </View>
-              ))}
-            </Card.Content>
-          </Card>
+    <SafeAreaView className={`flex-1 ${isDark ? 'bg-zinc-950' : 'bg-[#f4f5f9]'}`} edges={['top']}>
+      <StatusBar barStyle={isDark ? 'light-content' : 'dark-content'} />
+      <ScrollView className="flex-1" showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 110 }}>
+        
+        <View className="px-5 pt-8 pb-4">
+           <Text className={`text-base font-medium ${isDark ? 'text-zinc-400' : 'text-zinc-500'}`}>AI Kitchen</Text>
+           <Text className={`text-3xl font-black mt-1 tracking-tight ${isDark ? 'text-white' : 'text-zinc-900'}`}>Create Your Salad</Text>
+        </View>
 
-          <Card style={[styles.card, { backgroundColor: theme.colors.surface }]} mode="outlined">
-            <Card.Title 
-              title="Calorie Target" 
-              titleStyle={[styles.cardTitle, { color: theme.colors.onSurface }]} 
-            />
-            <Card.Content>
-              <Searchbar
-                placeholder="Enter calorie target"
-                value={calorieTarget}
-                onChangeText={setCalorieTarget}
-                keyboardType="numeric"
-                style={[styles.calorieInput, { backgroundColor: theme.colors.surfaceVariant }]}
-                theme={theme}
-                icon="calculator"
-              />
-            </Card.Content>
-          </Card>
+        <View className="px-5 mt-4">
+           <View className={`w-full rounded-[30px] p-6 border ${isDark ? 'bg-zinc-900 border-zinc-800' : 'bg-white border-zinc-100'}`}>
+              <Text className={`text-[17px] font-bold mb-4 ${isDark ? 'text-white' : 'text-zinc-900'}`}>Dietary Preferences</Text>
+              
+              <View className="flex-row flex-wrap gap-2">
+                 {Object.entries(preferences).map(([key, value]) => (
+                    <TouchableOpacity
+                       key={key}
+                       onPress={() => togglePreference(key as keyof SaladPreferences)}
+                       className={`px-4 py-2.5 rounded-full border ${value ? 'border-transparent bg-[#ff6b6b]' : isDark ? 'border-zinc-700 bg-transparent' : 'border-zinc-200 bg-transparent'}`}
+                    >
+                       <Text className={`text-sm font-semibold capitalize ${value ? 'text-white' : isDark ? 'text-zinc-400' : 'text-zinc-600'}`}>
+                          {key.replace('is', '').replace(/([A-Z])/g, ' $1').trim()}
+                       </Text>
+                    </TouchableOpacity>
+                 ))}
+              </View>
 
-          {recipe ? (
-            <Card style={[styles.card, { backgroundColor: theme.colors.surface }]} mode="outlined">
-              <Card.Title 
-                title="Your Custom Recipe" 
-                titleStyle={[styles.cardTitle, { color: theme.colors.onSurface }]} 
-              />
-              <Card.Content>
-                <ThemedText style={[styles.recipeText, { color: theme.colors.onSurface }]}>{recipe}</ThemedText>
-              </Card.Content>
-            </Card>
-          ) : null}
-        </ScrollView>
+              <View className="mt-8">
+                 <Text className={`text-[17px] font-bold mb-3 ${isDark ? 'text-white' : 'text-zinc-900'}`}>Calorie Target</Text>
+                 <View className={`flex-row items-center h-14 rounded-2xl px-4 border ${isDark ? 'bg-zinc-950 border-zinc-800' : 'bg-[#f4f5f9] border-zinc-200'}`}>
+                    <Ionicons name="flame-outline" size={20} color={isDark ? '#71717a' : '#a1a1aa'} />
+                    <TextInput
+                       className={`flex-1 ml-3 font-semibold text-base ${isDark ? 'text-white' : 'text-zinc-900'}`}
+                       placeholder="e.g. 500"
+                       placeholderTextColor={isDark ? '#71717a' : '#a1a1aa'}
+                       value={calorieTarget}
+                       onChangeText={setCalorieTarget}
+                       keyboardType="numeric"
+                    />
+                    <Text className={`font-semibold ${isDark ? 'text-zinc-500' : 'text-zinc-400'}`}>kcal</Text>
+                 </View>
+              </View>
+           </View>
+        </View>
 
-        <Button
-          mode="outlined"
-          onPress={generateRecipe}
-          loading={loading}
-          disabled={loading}
-          style={[styles.generateButton, { borderColor: theme.colors.primary }]}
-          labelStyle={[styles.generateButtonLabel, { color: theme.colors.primary }]}
-          contentStyle={{ height: 48 }}
-          rippleColor={theme.colors.primary}
-          uppercase={false}
-          borderRadius={24}
-        >
-          {loading ? 'Generating...' : 'Generate Recipe'}
-        </Button>
-      </ThemedView>
+        <View className="px-5 mt-6">
+           <TouchableOpacity 
+              onPress={generateRecipe}
+              disabled={loading}
+              className={`w-full h-16 rounded-[20px] items-center justify-center flex-row shadow-lg ${loading ? 'bg-zinc-800' : isDark ? 'bg-white' : 'bg-zinc-900'}`}
+           >
+              {loading ? (
+                 <ActivityIndicator color={isDark ? '#e4e4e7' : '#fff'} />
+              ) : (
+                 <>
+                    <MaterialCommunityIcons name="magic-staff" size={24} color={isDark ? '#09090b' : '#fff'} className="mr-2" />
+                    <Text className={`font-black text-lg ml-2 ${isDark ? 'text-zinc-950' : 'text-white'}`}>Generate Recipe</Text>
+                 </>
+              )}
+           </TouchableOpacity>
+        </View>
+
+        {recipe ? (
+           <View className="px-5 mt-10">
+              <View className={`w-full rounded-[30px] p-6 border ${isDark ? 'bg-zinc-900 border-zinc-800' : 'bg-white border-zinc-100'}`}>
+                 <View className="flex-row items-center mb-4 border-b border-zinc-800 pb-4">
+                    <Ionicons name="restaurant-outline" size={24} color="#ff6b6b" />
+                    <Text className={`ml-3 text-[19px] font-black ${isDark ? 'text-white' : 'text-zinc-900'}`}>Custom Salad Recipe</Text>
+                 </View>
+                 <Text className={`text-[15px] leading-6 ${isDark ? 'text-zinc-300' : 'text-zinc-700'}`}>
+                    {recipe}
+                 </Text>
+                 
+                 <TouchableOpacity className="mt-8 flex-row items-center justify-center py-4 rounded-2xl bg-zinc-800/10 border border-zinc-800/20">
+                    <Feather name="share-2" size={20} color={isDark ? '#71717a' : '#52525b'} />
+                    <Text className={`ml-2 font-bold ${isDark ? 'text-zinc-400' : 'text-zinc-700'}`}>Share Recipe</Text>
+                 </TouchableOpacity>
+              </View>
+           </View>
+        ) : (
+           <View className="px-10 mt-16 items-center opacity-40">
+              <Ionicons name="sparkles-outline" size={60} color={isDark ? '#27272a' : '#d4d4d8'} />
+              <Text className={`text-center mt-4 font-medium ${isDark ? 'text-zinc-500' : 'text-zinc-400'}`}>
+                 Toggle your preferences and get a personalized healthy salad recipe powered by AI.
+              </Text>
+           </View>
+        )}
+
+      </ScrollView>
     </SafeAreaView>
   );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  scrollView: {
-    flex: 1,
-  },
-  title: {
-    textAlign: 'center',
-    marginVertical: 20,
-    fontSize: 28,
-    fontWeight: '700',
-  },
-  card: {
-    marginHorizontal: 16,
-    marginBottom: 20,
-    borderRadius: 12,
-    elevation: 2,
-    shadowColor: theme => theme.colors.shadow,
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 0.2,
-    shadowRadius: 2,
-    overflow: 'hidden',
-    borderWidth: 1,
-    borderColor: theme => theme.colors.outline,
-  },
-  cardTitle: {
-    fontSize: 20,
-    fontWeight: '600',
-    paddingHorizontal: 8,
-    marginBottom: 4,
-  },
-  cardContent: {
-    paddingHorizontal: 16,
-    paddingVertical: 12,
-  },
-  preferenceRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingVertical: 10,
-    width: '100%',
-  },
-  preferenceText: {
-    fontSize: 16,
-    flex: 1,
-    marginRight: 16,
-  },
-  preferenceButton: {
-    width: 100,
-    borderRadius: 20,
-    borderColor: theme => theme.colors.primary,
-    opacity: 0.85,
-    transform: [{ scale: 0.95 }],
-    transition: 'all 0.6s ease',
-  },
-  preferenceButtonLabel: {
-    fontSize: 14,
-    fontWeight: '600',
-  },
-  calorieInput: {
-    marginVertical: 8,
-    backgroundColor: 'transparent',
-  },
-  generateButton: {
-    margin: 16,
-    paddingVertical: 8,
-    borderRadius: 24,
-    borderWidth: 2,
-  },
-  generateButtonLabel: {
-    fontSize: 16,
-    fontWeight: '600',
-  },
-  recipeText: {
-    lineHeight: 24,
-    fontSize: 15,
-    paddingVertical: 8,
-  },
-  fab: {
-    position: 'absolute',
-    margin: 16,
-    right: 0,
-    bottom: 0,
-  },
-});
+}

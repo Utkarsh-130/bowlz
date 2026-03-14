@@ -3,7 +3,7 @@ import { View, Text, TextInput, TouchableOpacity, ScrollView, useColorScheme, St
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Feather, Ionicons } from '@expo/vector-icons';
 import foodDatabase from '../../assets/foods.json';
-import { useMeals, MealType } from '../context/MealContext';
+import useMeals, { MealType } from '../context/MealContext';
 
 export default function CalTrac() {
   const colorScheme = useColorScheme();

@@ -97,11 +97,7 @@ export default function TabLayout() {
           <Tab.Screen name="Home" component={Index} />
           <Tab.Screen name="Create" component={Create} />
           <Tab.Screen name="Caltrac" component={CalTracScreen} />
-          <Tab.Screen 
-            name="Settings" 
-            component={SettingsScreen} 
-            options={{ tabBarButton: () => null }} 
-          />
+
         </Tab.Navigator>
       </View>
     </MealProvider>

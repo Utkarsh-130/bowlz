@@ -6,7 +6,7 @@ import { Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import CircularProgress from 'react-native-circular-progress-indicator';
 import Slider from '@react-native-community/slider';
-import { useMeals, MealType } from '../context/MealContext';
+import useMeals, { MealType } from '../context/MealContext';
 
 interface MealEntry {
    type: 'breakfast' | 'lunch' | 'dinner' | 'snacks';

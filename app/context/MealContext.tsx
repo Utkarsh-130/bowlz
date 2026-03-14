@@ -40,7 +40,7 @@ export function MealProvider({ children }: { children: ReactNode }) {
   );
 }
 
-export function useMeals() {
+export default function useMeals() {
   const context = useContext(MealContext);
   if (context === undefined) {
     throw new Error('useMeals must be used within a MealProvider');

@@ -1,79 +1,42 @@
+# 🥗 Bowlz
 
-🥗 Boulz
-Boulz is your all-in-one health assistant app – a calorie tracker, food calorie finder, and custom salad maker built with React Native using Expo and powered by the OpenRouter API. Whether you're trying to lose weight, bulk up, or just eat healthier, Boulz has your back.
+**Bowlz** is your all-in-one health assistant app – a calorie tracker, food calorie finder, and custom salad maker built with **React Native** using **Expo** and powered by the **OpenRouter API**. Whether you're trying to lose weight, bulk up, or just eat healthier, Bowlz has your back.
 
-🔥 Features
-✅ Calorie Tracker – Log your meals and monitor daily calorie intake.
+### 📦 Download & Releases
+[<img src="https://raw.githubusercontent.com/ImranR98/Obtainium/main/assets/graphics/badge_obtainium.png" width="240" alt="Get it on Obtainium" />](https://github.com/Utkarsh-130/bowlz/releases)
 
-🔍 Calorie Finder – Instantly get calorie info of any food item using OpenRouter’s AI.
+> **Note:** This version is a **fully local** build. For the latest updates and APKs, visit the [**Releases Page**](https://github.com/Utkarsh-130/bowlz/releases).
 
-🥗 Salad Maker – Get personalized salad recipes based on your dietary preferences and available ingredients.
+---
 
-🌐 Powered by OpenRouter for smart AI-assisted features.
+### 📱 Preview
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/5d23d137-af64-410e-b6e6-da08dde6866c" width="32%" alt="Bowlz Screenshot 1" />
+  <img src="https://github.com/user-attachments/assets/73f45255-5dd4-4766-b7eb-e50c7e149e97" width="32%" alt="Bowlz Screenshot 2" />
+  <img src="https://github.com/user-attachments/assets/f9929291-697b-444b-b65c-e3616038645c" width="32%" alt="Bowlz Screenshot 3" />
+</p>
 
-📱 Cross-platform app built with React Native and Expo.
+---
 
-🚀 Getting Started
-Prerequisites
-Node.js >= 14
+### 🔥 Features
+*   **✅ Calorie Tracker** – Log your meals and monitor daily calorie intake.
+*   **🔍 Calorie Finder** – Instantly get calorie info of any food item using OpenRouter’s AI.
+*   **🥗 Salad Maker** – Get personalized salad recipes based on your dietary preferences and available ingredients.
+*   **🔒 Privacy by Design** – Your data stays on your device—no external pings or cloud syncing in this build.
+*   **🌐 Powered by OpenRouter** for smart AI-assisted features.
+*   **📱 Cross-platform** app built with React Native and Expo.
 
-Expo CLI
+---
 
-An OpenRouter API key
+### 🚀 Getting Started
 
-Installation
-bash
-Copy
-Edit
+#### Prerequisites
+*   Node.js >= 14
+*   Expo CLI
+*   An OpenRouter API key
 
-cd boulz
+#### Installation
+```bash
+git clone [https://github.com/Utkarsh-130/bowlz.git](https://github.com/Utkarsh-130/bowlz.git)
+cd bowlz
 npm install
-Running the App
-bash
-Copy
-Edit
-npx expo start
-Scan the QR code in the Expo Go app on your phone or run it on an emulator.
-
-🔑 Configuration
-Create a .env file in the root directory with your OpenRouter key:
-
-env
-Copy
-Edit
-OPENROUTER_API_KEY=your_openrouter_api_key_here
-You can get your API key from openrouter.ai.
-
-🧠 How it Works
-Calorie Finder: Uses natural language queries to OpenRouter API to estimate calories of foods.
-
-Salad Maker: Suggests salads based on input ingredients and dietary goals using LLM responses.
-
-Tracker: Stores food logs locally (or integrate with a backend if needed).
-
-🛠 Tech Stack
-React Native with Expo
-
-OpenRouter API (LLM-based)
-
-AsyncStorage (for local data persistence)
-
-Optionally extensible to Firebase or any backend
-
-✨ Roadmap
- Add user authentication
-
- Integrate barcode scanner for packaged food
-
- Nutrition insights and tips
-
- Dark mode
-
- Export logs to PDF or CSV
-
-🤝 Contributing
-Pull requests are welcome. For major changes, please open an issue first to discuss what you'd like to change.
-
-💡 Inspiration
-Built to help people make smarter food choices — eat clean, feel good, live better 💚
-
